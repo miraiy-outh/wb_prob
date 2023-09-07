@@ -10,25 +10,31 @@
 <body>
     <header>
         <div class="catalog">
-            <img src="" class="catalog-icon" alt="catalog menu">
-            <img src="" class="logo" alt="logo">
+            <div class="burger-border">
+                <img src="icons\burger.svg" class="burger" alt="catalog menu">
+            </div>
+            <img src="icons\logo.svg" class="logo" alt="logo">
         </div>
 
         <div class="search">
-            <div class="search-form">
-                <input type="text" class="search-form__text" placeholder="Я ищу..." />
-                <img src="" class="search-form__icon" alt="search icon">
-            </div>
+            <input type="text" class="search-form__text" placeholder="Я ищу..." />
+            <button class="search-form__button"></button>
         </div>
 
         <div class="menu">
             <div class="profile">
-                <img src="" class="menu__icon" alt="profile icon">
+                <div class="menu__icon-container profile__icon-container">
+                    <img src="icons\profile.svg" class="menu__icon profile__icon" alt="profile icon">
+                </div>
+
                 <p class="menu__text">Профиль</p>
             </div>
 
             <div class="cart">
-                <img src="" class="menu__icon" alt="cart icon">
+                <div class="menu__icon-container cart__icon-container">
+                    <img src="icons\cart.svg" class="menu__icon cart__icon" alt="cart icon">
+                </div>
+
                 <p class="menu__text">Корзина</p>
             </div>
         </div>
@@ -40,9 +46,13 @@
 
             <div class="cart-content__products-info">
                 <div class="products-info__in-stock">
-                    <div class="in-stock__checkbox-all">
-                        <input type="checkbox" id="all" name="all" value="all">
-                        <label for="all">Выбрать все</label>
+                    <div class="in-stock__first-line">
+                        <div class="in-stock__checkbox-all">
+                            <input type="checkbox" id="all" name="all" value="all">
+                            <label for="all">Выбрать все</label>
+                        </div>
+
+                        <button class="in-stock__button"></button>
                     </div>
                     <hr>
                     <div class="in-stock__products">
@@ -50,7 +60,7 @@
                             <div class="product-info">
                                 <div class="product-info__icon">
                                     <input type="checkbox" id="product1" name="product" value="product1">
-                                    <img src="" class="product-info__img" alt="product photo">
+                                    <img src="icons\photo.svg" class="product-info__img" alt="product photo">
                                 </div>
 
                                 <div class="product-item">
@@ -83,10 +93,8 @@
                                     <p class="product-sum__text">Осталось 2 шт.</p>
 
                                     <div class="product-sum__icons">
-                                        <button class="product__button"><img src="" class="product-sum__icon"
-                                                alt="add to favorites"></button>
-                                        <button class="product__button"><img src="" class="product-sum__icon"
-                                                alt="delete"></button>
+                                        <button class="product__button"></button>
+                                        <button class="product__button"></button>
                                     </div>
                                 </div>
 
@@ -109,17 +117,22 @@
                 </div>
 
                 <div class="products-info__absent">
-                    <div class="absent__header">
-                        <p class="absent__header__text">Отсутствуют ·</p>
-                        <p class="absent__header__text absent__header__sum">3</p>
-                        <p class="absent__header__text">товара</p>
+                    <div class="absent__first-line">
+                        <div class="absent__header">
+                            <p class="absent__header__text">Отсутствуют ·</p>
+                            <p class="absent__header__text absent__header__sum">3</p>
+                            <p class="absent__header__text">товара</p>
+                        </div>
+
+                        <button class="absent__button"></button>
                     </div>
 
                     <div class="products">
                         <div class="product">
                             <div class="product-info">
                                 <div class="product-info__icon">
-                                    <img src="" class="product-info__img absent__img" alt="product photo">
+                                    <img src="icons\photo.svg" class="product-info__img absent__img"
+                                        alt="product photo">
                                 </div>
 
                                 <div class="product-item">
@@ -133,10 +146,8 @@
                             </div>
                             <div class="product-order">
                                 <div class="product-sum__icons">
-                                    <button class="product__button"><img src="" class="product-sum__icon"
-                                            alt="add to favorites"></button>
-                                    <button class="product__button"><img src="" class="product-sum__icon"
-                                            alt="delete"></button>
+                                    <button class="product__button"></button>
+                                    <button class="product__button"></button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +188,7 @@
                         </div>
 
                         <div class="delivery-info__denial-info">
-                            <img src="" class="denial-info__icon" alt="denial info icon">
+                            <img src="icons\check-shipping.svg" class="denial-info__icon" alt="denial info icon">
                             <p class="denial-info__text">Обратная доставка товаров на склад при отказе — <span
                                     class="coloured">бесплатно</span></p>
                         </div>
@@ -190,7 +201,7 @@
                         </div>
 
                         <div class="payment-info__card-info">
-                            <img src="" class="card-info__icon" alt="card icon">
+                            <img src="icons\mir.svg" class="card-info__icon" alt="card icon">
 
                             <div class="card-info__data">
                                 <p class="card-info__data__text">1234 56·· ···· 1234</p>
@@ -230,9 +241,9 @@
             <div class="cart-total__info">
                 <div class="cart-total__cost">
                     <div class="cost__header">
-                        <p class="cost__header__text">Итого</p>
-                        <p class="cost__header__text cost__header__price">2 101 063</p>
-                        <p class="cost__header__text">сом</p>
+                        <h2 class="cost__header__text">Итого</h2>
+                        <h2 class="cost__header__text cost__header__price">2 101 063</h2>
+                        <h2 class="cost__header__text">сом</h2>
                     </div>
 
                     <div class="cost__items">
@@ -269,9 +280,7 @@
                     <div class="point__info">
                         <div class="point__header">
                             <h3 class="cart-total__header__text">Доставка в пункт выдачи</h3>
-                            <button class="cart-total__button">
-                                <img src="" class="cart-total__icon" alt="change">
-                            </button>
+                            <button class="cart-total__button"></button>
                         </div>
 
                         <p class="cart-total__text">Бишкек, улица Ахматбека Суюмбаева, 12/1</p>
@@ -282,7 +291,7 @@
                     </div>
 
                     <div class="cart-total__add">
-                        <img src="" class="denial-info__icon" alt="denial info icon">
+                        <img src="icons\check-shipping.svg" class="denial-info__icon" alt="denial info icon">
                         <p class="denial-info__text">Обратная доставка товаров на склад при отказе — <span
                                 class="coloured">бесплатно</span></p>
                     </div>
@@ -291,13 +300,11 @@
                 <div class="cart-total__card">
                     <div class="card__header">
                         <h2 class="cart-total__header__text">Оплата картой</h2>
-                        <button class="cart-total__button">
-                            <img src="" class="cart-total__icon" alt="change">
-                        </button>
+                        <button class="cart-total__button"></button>
                     </div>
 
                     <div class="card__info">
-                        <img src="" class="card__info__icon" alt="card icon">
+                        <img src="icons\mir.svg" class="card__info__icon" alt="card icon">
                         <p class="cart-total__text">1234 12·· ···· 1234</p>
                     </div>
 
@@ -315,11 +322,12 @@
             <div class="cart-total__button-info">
                 <button class="cart-total__button">Заказать</button>
 
-                <div class="cart-total__button-checkbox">
-                    <input type="checkbox" id="button-checkbox" name="button-checkbox" value="button-checkbox">
-                    <label for="button-checkbox">Соглашаюсь <span class="button-checkbox__underline">с правилами
-                            пользования торговой
-                            площадкой и возврата</span></label>
+                <div class="cart-total__button-check">
+                    <img src="icons\check.svg" class="button-check__icon" alt="rules check icon">
+                    <p class="button-checkbox__text">Соглашаюсь <span
+                            class="button-checkbox__text button-check__text__underline">с правилами
+                            пользования торговой площадкой и возврата</span>
+                    </p>
                 </div>
             </div>
         </div>
