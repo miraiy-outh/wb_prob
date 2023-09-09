@@ -128,7 +128,7 @@
 
                         <button class="in-stock__button"></button>
                     </div>
-
+                    <hr>
                     <div class="products">
                         <div class="product absent__product">
                             <div class="product-info">
@@ -167,23 +167,42 @@
 
                             <div class="delivery-way__info">
                                 <div class="delivery-way__info__item">
+                                    <p class="delivery-way__info__item__header">Пункт выдачи</p>
+                                    <div class="delivery-way__subitem delivery-way__point">
+                                        <p class="delivery-way__info__item__text">Бишкек, улица Ахматбека Суюмбаева,
+                                            12/1</p>
+                                        <div class="delivery-way__rating-container">
+                                            <div class="rating">
+                                                <img src="icons/rating.svg" alt="rating star">
+                                                <p class="delivery-way__info__item__subtext">4.99</p>
+                                            </div>
+                                            <p class="delivery-way__info__item__subtext">Ежедневно с 10 до 21</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="delivery-way__info__item">
                                     <p class="delivery-way__info__item__header">Стоимость доставки</p>
-                                    <p class="delivery-way__info__item__text">Бесплатно</p>
+                                    <p class="delivery-way__info__item__text delivery-way__subitem">Бесплатно</p>
                                 </div>
 
                                 <div class="delivery-way__info__item">
                                     <p class="delivery-way__info__item__header">5—6 февраля</p>
-                                    <p class="delivery-way__info__item__images">
-                                        <img src="" class="delivery-way__info__item__image" alt="product photo">
-                                        <img src="" class="delivery-way__info__item__image" alt="product photo">
-                                        <img src="" class="delivery-way__info__item__image" alt="product photo">
-                                    </p>
+                                    <div class="delivery-way__info__item__images delivery-way__subitem">
+                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                            alt="product photo">
+                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                            alt="product photo">
+                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                            alt="product photo">
+                                    </div>
                                 </div>
 
                                 <div class="delivery-way__info__item">
                                     <p class="delivery-way__info__item__header">7—8 февраля</p>
-                                    <p class="delivery-way__info__item__images">
-                                        <img src="" class="delivery-way__info__item__image" alt="product photo">
+                                    <p class="delivery-way__info__item__images delivery-way__subitem">
+                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                            alt="product photo">
                                     </p>
                                 </div>
                             </div>
@@ -191,23 +210,29 @@
 
                         <div class="delivery-info__denial-info">
                             <img src="icons\check-shipping.svg" class="denial-info__icon" alt="denial info icon">
-                            <p class="denial-info__text">Обратная доставка товаров на склад при отказе — <span
-                                    class="coloured">бесплатно</span></p>
+                            <div class="denial-info__text__container">
+                                <p class="denial-info__text">Обратная доставка товаров на склад при отказе —&nbsp</p>
+                                <p class="coloured denial-info__text">бесплатно</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="order-info__payment-info">
-                        <div class="payment-info__header">
+                        <div class="order-info__header">
                             <h2 class="order-info__header__text">Способ оплаты</h2>
                             <button class="order-info__button">Изменить</button>
                         </div>
 
                         <div class="payment-info__card-info">
-                            <img src="icons\mir.svg" class="card-info__icon" alt="card icon">
+                            <div class="card-info__container">
+                                <div class="card-info__icon__container">
+                                    <img src="icons\mir.svg" class="card-info__icon" alt="card icon">
+                                </div>
 
-                            <div class="card-info__data">
-                                <p class="card-info__data__text">1234 56·· ···· 1234</p>
-                                <p class="card-info__data__text">01/30</p>
+                                <div class="card-info__data">
+                                    <p class="card-info__data__text">1234 56•• •••• 1234</p>
+                                    <p class="card-info__data__text">01/30</p>
+                                </div>
                             </div>
 
                             <p class="card-info__text">Спишем оплату с карты при получении</p>
@@ -216,23 +241,38 @@
 
                     <div class="order-info__receiver-info">
                         <h2 class="order-info__header__text">Получатель</h2>
+                        <div class="receiver-info__forms">
+                            <div class="receiver-info__form__container">
+                                <label for="first-name" class="receiver-info__label">Имя</label>
+                                <input type="text" class="receiver-info__form" id="first-name" name="first-name"
+                                    placeholder="Имя">
 
-                        <input type="text" class="receiver-info__form" id="first-name" name="first-name"
-                            placeholder="Имя">
+                            </div>
 
-                        <input type="text" class="receiver-info__form" id="last-name" name="last-name"
-                            placeholder="Фамилия">
+                            <div class="receiver-info__form__container">
+                                <label for="last-name" class="receiver-info__label">Фамилия</label>
+                                <input type="text" class="receiver-info__form" id="last-name" name="last-name"
+                                    placeholder="Фамилия">
+                            </div>
 
-                        <input type="email" class="receiver-info__form" id="email" name="email" placeholder="Почта">
+                            <div class="receiver-info__form__container">
+                                <label for="email">Почта</label>
+                                <input type="email" class="receiver-info__form" id="email" name="email"
+                                    placeholder="Почта">
+                            </div>
 
-                        <input type="tel" class="receiver-info__form" id="phone-number" name="phone-number"
-                            pattern="[0-9]{7}" placeholder="Телефон">
+                            <div class="receiver-info__form__container">
+                                <label for="phone-number" class="receiver-info__label">Телефон</label>
+                                <input type="tel" class="receiver-info__form" id="phone-number" name="phone-number"
+                                    placeholder="Телефон">
+                            </div>
 
-                        <div class="receiver-info__inn">
-                            <input type="text" class="receiver-info__form" id="inn" name="inn" pattern="^[0-9]{10,12}$"
-                                placeholder="ИНН">
-
-                            <p class="receiver-info__text">Для таможенного оформления</p>
+                            <div class="receiver-info__form__container">
+                                <label for="inn" class="receiver-info__label">ИНН</label>
+                                <input type="text" class="receiver-info__form" id="inn" name="inn"
+                                    pattern="^[0-9]{10,12}$" placeholder="ИНН">
+                                <p class="receiver-info__text">Для таможенного оформления</p>
+                            </div>
                         </div>
                     </div>
                 </div>
