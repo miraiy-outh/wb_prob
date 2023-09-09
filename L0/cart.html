@@ -49,7 +49,7 @@
                     <div class="in-stock__first-line">
                         <div class="in-stock__checkbox-all">
                             <input type="checkbox" id="all" name="all" value="all">
-                            <label for="all">Выбрать все</label>
+                            <label for="all" class="all__text">Выбрать все</label>
                         </div>
 
                         <button class="in-stock__button"></button>
@@ -75,8 +75,8 @@
                                         <p class="storage-info__name">Коледино WB</p>
                                         <div class="provider">
                                             <p class="storage-info__name">ООО Вайлберриз</p>
-                                            <div class="storage-info__icon">
-                                                <p class="storage-info__icon__text">i</p>
+                                            <div class="storage-info__icon__container">
+                                                <img src="icons/i.svg" class="storage-info__icon" alt="info">
                                             </div>
                                         </div>
                                     </div>
@@ -86,28 +86,30 @@
                                 <div class="product-sum">
                                     <div class="product-sum__counter">
                                         <button class="counter__button counter__minus">-</button>
-                                        <span class="counter__text"></span>
+                                        <span class="counter__text">1</span>
                                         <button class="counter__button counter__plus">+</button>
                                     </div>
 
                                     <p class="product-sum__text">Осталось 2 шт.</p>
 
                                     <div class="product-sum__icons">
-                                        <button class="product__button"></button>
-                                        <button class="product__button"></button>
+                                        <button class="product__button favourite__button"></button>
+                                        <button class="product__button delete__button"></button>
                                     </div>
                                 </div>
 
                                 <div class="product__price">
                                     <div class="price__actual">
-                                        <p class="actual__text">522</p>
+                                        <p class="actual__text">522&nbsp</p>
                                         <p class="actual__text">сом</p>
                                     </div>
 
-                                    <div class="price__old">
-                                        <p class="old__text">1051</p>
-                                        <p class="old__text">сом</p>
-                                        <hr>
+                                    <div class="price__old__container">
+                                        <hr class="old__line">
+                                        <div class="price__old">
+                                            <p class="old__text">1051&nbsp</p>
+                                            <p class="old__text">сом</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -119,16 +121,16 @@
                 <div class="products-info__absent">
                     <div class="absent__first-line">
                         <div class="absent__header">
-                            <p class="absent__header__text">Отсутствуют ·</p>
-                            <p class="absent__header__text absent__header__sum">3</p>
+                            <p class="absent__header__text">Отсутствуют ·&nbsp</p>
+                            <p class="absent__header__text absent__header__sum">3&nbsp</p>
                             <p class="absent__header__text">товара</p>
                         </div>
 
-                        <button class="absent__button"></button>
+                        <button class="in-stock__button"></button>
                     </div>
 
                     <div class="products">
-                        <div class="product">
+                        <div class="product absent__product">
                             <div class="product-info">
                                 <div class="product-info__icon">
                                     <img src="icons\photo.svg" class="product-info__img absent__img"
@@ -144,10 +146,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="product-order">
+                            <div class="absent__product-order">
                                 <div class="product-sum__icons">
-                                    <button class="product__button"></button>
-                                    <button class="product__button"></button>
+                                    <button class="product__button favourite__button"></button>
+                                    <button class="product__button delete__button"></button>
                                 </div>
                             </div>
                         </div>
