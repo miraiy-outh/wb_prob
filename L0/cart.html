@@ -211,8 +211,8 @@
                         <div class="delivery-info__denial-info">
                             <img src="icons\check-shipping.svg" class="denial-info__icon" alt="denial info icon">
                             <div class="denial-info__text__container">
-                                <p class="denial-info__text">Обратная доставка товаров на склад при отказе —&nbsp</p>
-                                <p class="coloured denial-info__text">бесплатно</p>
+                                <p class="denial-info__text">Обратная доставка товаров на склад при отказе — <span
+                                        class="denial-info__text coloured">бесплатно</span></p>
                             </div>
                         </div>
                     </div>
@@ -242,36 +242,42 @@
                     <div class="order-info__receiver-info">
                         <h2 class="order-info__header__text">Получатель</h2>
                         <div class="receiver-info__forms">
-                            <div class="receiver-info__form__container">
-                                <label for="first-name" class="receiver-info__label">Имя</label>
-                                <input type="text" class="receiver-info__form" id="first-name" name="first-name"
-                                    placeholder="Имя">
+                            <div class="form__container forms__name">
+                                <div class="receiver-info__form__container">
+                                    <input type="text" class="receiver-info__form form__name" id="first-name"
+                                        name="first-name" placeholder="Укажите имя">
+                                    <label for="first-name" class="receiver-info__label">Имя</label>
+                                </div>
 
+                                <div class="receiver-info__form__container">
+                                    <input type="text" class="receiver-info__form form__name" id="last-name"
+                                        name="last-name" placeholder="Введите фамилию">
+                                    <label for="last-name" class="receiver-info__label">Фамилия</label>
+                                </div>
                             </div>
 
-                            <div class="receiver-info__form__container">
-                                <label for="last-name" class="receiver-info__label">Фамилия</label>
-                                <input type="text" class="receiver-info__form" id="last-name" name="last-name"
-                                    placeholder="Фамилия">
-                            </div>
+                            <div class="form__container forms__etc">
+                                <div class="receiver-info__form__container">
+                                    <input type="email" class="receiver-info__form" id="email" name="email"
+                                        placeholder="Электронная почта">
+                                    <label for="email" class="receiver-info__label">Электронная почта</label>
+                                </div>
 
-                            <div class="receiver-info__form__container">
-                                <label for="email">Почта</label>
-                                <input type="email" class="receiver-info__form" id="email" name="email"
-                                    placeholder="Почта">
-                            </div>
+                                <div class="receiver-info__form__container">
+                                    <input type="tel" class="receiver-info__form" id="phone-number" name="phone-number"
+                                        placeholder="Номер телефона">
+                                    <label for="phone-number" class="receiver-info__label">Телефон</label>
+                                </div>
+                                <div class="receiver-info__form__container">
+                                    <div class="receiver-info__text__container">
+                                        <label for="inn" class="receiver-info__text">Для таможенного оформления</label>
+                                    </div>
 
-                            <div class="receiver-info__form__container">
-                                <label for="phone-number" class="receiver-info__label">Телефон</label>
-                                <input type="tel" class="receiver-info__form" id="phone-number" name="phone-number"
-                                    placeholder="Телефон">
-                            </div>
+                                    <input type="text" class="receiver-info__form" id="inn" name="inn"
+                                        pattern="^[0-9]{10,12}$" placeholder="Укажите ИНН">
+                                    <label for="inn" class="receiver-info__label">ИНН</label>
+                                </div>
 
-                            <div class="receiver-info__form__container">
-                                <label for="inn" class="receiver-info__label">ИНН</label>
-                                <input type="text" class="receiver-info__form" id="inn" name="inn"
-                                    pattern="^[0-9]{10,12}$" placeholder="ИНН">
-                                <p class="receiver-info__text">Для таможенного оформления</p>
                             </div>
                         </div>
                     </div>
@@ -280,84 +286,93 @@
         </div>
 
         <div class="cart-total">
-            <div class="cart-total__info">
-                <div class="cart-total__cost">
-                    <div class="cost__header">
-                        <h2 class="cost__header__text">Итого</h2>
-                        <h2 class="cost__header__text cost__header__price">2 101 063</h2>
+            <div class="cart-total__cost">
+                <div class="cost__header">
+                    <h2 class="cost__header__text">Итого</h2>
+                    <div class="cost__header__container">
+                        <h2 class="cost__header__text cost__header__price">2 101 063&nbsp</h2>
                         <h2 class="cost__header__text">сом</h2>
                     </div>
+                </div>
 
-                    <div class="cost__items">
-                        <div class="cost__item">
-                            <p class="cost__item__text">203 товара</p>
+                <div class="cost__items">
+                    <div class="cost__item">
+                        <p class="cost__item__text">203 товара</p>
 
-                            <div class="cost__item__price">
-                                <p class="cost__item__text">2 303 048</p>
-                                <p class="cost__item__text">сом</p>
+                        <div class="cost__item__price">
+                            <p class="cost__item__text">2 303 048&nbsp</p>
+                            <p class="cost__item__text">сом</p>
+                        </div>
+                    </div>
+
+                    <div class="cost__item">
+                        <p class="cost__item__text">Скидка</p>
+
+                        <div class="cost__item__price">
+                            <div class="cost__item__discount">
+                                <p class="cost__item__text">-</p>
+                                <p class="cost__item__text">200 985&nbsp</p>
                             </div>
+
+                            <p class="cost__item__text">сом</p>
                         </div>
+                    </div>
 
-                        <div class="cost__item">
-                            <p class="cost__item__text">Скидка</p>
+                    <div class="cost__item">
+                        <p class="cost__item__text">Доставка</p>
+                        <p class="cost__item__text">Бесплатно</p>
+                    </div>
+                </div>
+            </div>
 
-                            <div class="cost__item__price">
-                                <div class="cost__item__discount">
-                                    <p class="cost__item__text">-</p>
-                                    <p class="cost__item__text">200 985</p>
-                                </div>
+            <div class="cart-total__items">
+                <div class="cart-total__item">
+                    <div class="cart-total__header">
+                        <h3 class="cart-total__header__text">Доставка в пункт выдачи</h3>
+                        <button class="cart-total__change__button"></button>
+                    </div>
 
-                                <p class="cost__item__text">сом</p>
-                            </div>
-                        </div>
-
-                        <div class="cost__item">
-                            <p class="cost__item__text">Доставка</p>
-                            <p class="cost__item__text">Бесплатно</p>
-                        </div>
+                    <p class="cart-total__text">Бишкек, улица Ахматбека Суюмбаева, 12/1</p>
+                    <div class="point__info__date">
+                        <p class="cart-total__text cart-total__text__date">5-8 фев</p>
                     </div>
                 </div>
 
-                <div class="cart-total__point">
-                    <div class="point__info">
-                        <div class="point__header">
-                            <h3 class="cart-total__header__text">Доставка в пункт выдачи</h3>
-                            <button class="cart-total__button"></button>
-                        </div>
-
-                        <p class="cart-total__text">Бишкек, улица Ахматбека Суюмбаева, 12/1</p>
-                        <div class="point__info__date">
-                            <p class="cart-total__text cart-total__text__date">5-8 фев</p>
-                            <hr>
-                        </div>
-                    </div>
-
-                    <div class="cart-total__add">
-                        <img src="icons\check-shipping.svg" class="denial-info__icon" alt="denial info icon">
-                        <p class="denial-info__text">Обратная доставка товаров на склад при отказе — <span
-                                class="coloured">бесплатно</span></p>
+                <div class="delivery-info__denial-info cart-total__denial-info">
+                    <img src="icons\check-shipping.svg" class="denial-info__icon" alt="denial info icon">
+                    <div class="denial-info__text__container">
+                        <p class="denial-info__text">Обратная доставка товаров на склад при отказе —
+                            <span class="denial-info__text coloured">бесплатно</span>
+                        </p>
                     </div>
                 </div>
+            </div>
 
-                <div class="cart-total__card">
-                    <div class="card__header">
+            <div class="cart-total__items">
+                <div class="cart-total__item">
+                    <div class="cart-total__header">
                         <h2 class="cart-total__header__text">Оплата картой</h2>
-                        <button class="cart-total__button"></button>
+                        <button class="cart-total__change__button"></button>
                     </div>
 
-                    <div class="card__info">
-                        <img src="icons\mir.svg" class="card__info__icon" alt="card icon">
-                        <p class="cart-total__text">1234 12·· ···· 1234</p>
-                    </div>
-
-                    <div class="cart-total__add">
-                        <div class="cart-total__checkbox">
-                            <input type="checkbox" id="add__checkbox" name="add__checkbox" value="add__checkbox">
-                            <label for="add__checkbox">Списать оплату сразу</label>
+                    <div class="card-info__container">
+                        <div class="card-info__icon__container">
+                            <img src="icons\mir.svg" class="card-info__icon" alt="card icon">
                         </div>
 
-                        <p class="cart-total__text">Спишем оплату с карты при получении</p>
+                        <div class="card-info__data">
+                            <p class="card-info__data__text">1234 56•• •••• 1234</p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="cart-total__add">
+                    <div class="cart-total__checkbox">
+                        <input type="checkbox" id="add__checkbox" name="add__checkbox" value="add__checkbox">
+                        <label for="add__checkbox" class="cart-total__text">Списать оплату сразу</label>
+                    </div>
+
+                    <p class="cart-total__text cart-total__checkbox__text">Спишем оплату с карты при получении</p>
                 </div>
             </div>
 
