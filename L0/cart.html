@@ -56,7 +56,7 @@
                     </div>
                     <hr>
                     <div class="in-stock__products">
-                        <!-- <div class="product">
+                        <!--
                             <div class="product-info">
                                 <div class="product-info__icon__container">
                                     <div class="product-info__icon">
@@ -132,8 +132,8 @@
                         <button class="in-stock__button"></button>
                     </div>
                     <hr>
-                    <div class="products">
-                        <div class="product absent__product">
+                    <div class="products products__absent">
+                        <!-- <div class="product absent__product">
                             <div class="product-info">
                                 <div class="product-info__icon">
                                     <img src="icons\photo.svg" class="product-info__img absent__img"
@@ -155,8 +155,7 @@
                                     <button class="product__button delete__button"></button>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> -->
                     </div>
                 </div>
 
@@ -194,9 +193,9 @@
                                     <div class="delivery-way__info__item__images delivery-way__subitem">
                                         <img src="icons/photo.svg" class="delivery-way__info__item__image"
                                             alt="product photo">
-                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                        <img src="icons/photo2.svg" class="delivery-way__info__item__image"
                                             alt="product photo">
-                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                        <img src="icons/photo3.svg" class="delivery-way__info__item__image"
                                             alt="product photo">
                                     </div>
                                 </div>
@@ -204,7 +203,7 @@
                                 <div class="delivery-way__info__item">
                                     <p class="delivery-way__info__item__header">7—8 февраля</p>
                                     <p class="delivery-way__info__item__images delivery-way__subitem">
-                                        <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                        <img src="icons/photo2.svg" class="delivery-way__info__item__image"
                                             alt="product photo">
                                     </p>
                                 </div>
@@ -263,22 +262,41 @@
                                 <div class="receiver-info__form__container">
                                     <input type="email" class="receiver-info__form" id="email" name="email"
                                         placeholder="Электронная почта">
+
+                                    <div class="label__error__container">
+                                        <label for="email"
+                                            class="receiver-info__label receiver-info__label__error">Проверьте адрес
+                                            почты</label>
+                                    </div>
+
                                     <label for="email" class="receiver-info__label">Электронная почта</label>
                                 </div>
 
                                 <div class="receiver-info__form__container">
                                     <input type="tel" class="receiver-info__form" id="phone-number" name="phone-number"
                                         placeholder="Номер телефона">
+
+                                    <div class="label__error__container">
+                                        <label for="phone-number"
+                                            class="receiver-info__label receiver-info__label__error">Формат: +9 999 999
+                                            99 99</label>
+                                    </div>
+
                                     <label for="phone-number" class="receiver-info__label">Телефон</label>
                                 </div>
                                 <div class="receiver-info__form__container">
-                                    <div class="receiver-info__text__container">
+                                    <!-- <div class="receiver-info__text__container">
                                         <label for="inn" class="receiver-info__text">Для таможенного оформления</label>
+                                    </div> -->
+                                    <input type="text" class="receiver-info__form" id="inn" name="inn"
+                                        placeholder="Укажите ИНН">
+                                    <div class="label__error__container">
+                                        <label for="inn"
+                                            class="receiver-info__label receiver-info__label__error">Проверьте
+                                            ИНН</label>
                                     </div>
 
-                                    <input type="text" class="receiver-info__form" id="inn" name="inn"
-                                        pattern="^[0-9]{10,12}$" placeholder="Укажите ИНН">
-                                    <label for="inn" class="receiver-info__label">ИНН</label>
+                                    <label for="inn" class="receiver-info__label">ИНН для таможни</label>
                                 </div>
 
                             </div>

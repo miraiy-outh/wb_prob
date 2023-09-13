@@ -29,8 +29,6 @@ let products = [
         id: 3,
         imgURL: "icons/photo3.svg",
         productName: "Карандаши цветные Faber-Castell \"Замок\", набор 24 цвета, заточенные, шестигранные, Faber-Castell",
-        color: "белый",
-        size: 56,
         storageName: "Коледино WB",
         provider: "ООО Вайлдберриз",
         counter: 2,
@@ -50,13 +48,90 @@ function createProducts() {
 }
 
 function createOldProducts() {
-    products.forEach((item) => {
-        createOldProduct(item);
+    products.forEach((oldProduct) => {
+        createOldProduct(oldProduct);
     });
 }
 
+const firstName = document.querySelector('#first-name');
+const lastName = document.querySelector('#last-name');
+const email = document.querySelector('#email');
+const phoneNumber = document.querySelector('#phone-number');
+const inn = document.querySelector('#inn');
+
+function validateFirstName() {
+    var nameInputValue = firstName.value;
+    var nameCheck = (/^[a-zA-Zа-яА-Я]+$/).test(nameInputValue);
+    if (nameCheck) {
+        firstName.classList.remove('error__label');
+    }
+    else {
+        firstName.classList.add('error__label');
+    }
+}
+
+function validateLastName() {
+    var nameInputValue = lastName.value;
+    var nameCheck = (/^[a-zA-Zа-яА-Я]+$/).test(nameInputValue);
+    if (nameCheck) {
+        lastName.classList.remove('error__label');
+    }
+    else {
+        lastName.classList.add('error__label');
+    }
+}
+
+function validateEmail() {
+    var emailInputValue = email.value;
+    var emailCheck = (/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i).test(emailInputValue);
+    if (emailCheck) {
+        email.classList.remove('error__label');
+    }
+    else {
+        email.classList.add('error__label');
+    }
+}
+
+function validatePhoneNumber() {
+    var phoneNumberInputValue = phoneNumber.value;
+    var phoneNumberCheck = (/^\+?(\d{1,3})?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/).test(phoneNumberInputValue);
+    if (phoneNumberCheck) {
+        phoneNumber.classList.remove('error__label');
+    }
+    else {
+        phoneNumber.classList.add('error__label');
+    }
+}
+
+function validateInn() {
+    var innInputValue = inn.value;
+    var innCheck = (/^[0-9]{14}$/).test(innInputValue);
+    if (innCheck) {
+        inn.classList.remove('error__label');
+    }
+    else {
+        inn.classList.add('error__label');
+    }
+}
+
+function validateAll() {
+    console.log('lol');
+
+    validateFirstName();
+    validateLastName();
+    validateEmail();
+    validatePhoneNumber();
+    validateInn();
+
+    firstName.addEventListener('blur', validateFirstName);
+    lastName.addEventListener('blur', validateLastName);
+    email.addEventListener('blur', validateEmail);
+    phoneNumber.addEventListener('blur', validatePhoneNumber);
+    inn.addEventListener('blur', validateInn);
+
+}
+
 function createProduct(item) {
-    console.log(item);
     const products = document.querySelector('.in-stock__products');
     const product = document.createElement('div');
     product.classList.add('product');
@@ -87,9 +162,6 @@ function createProduct(item) {
 
     const characteristics = document.createElement('div');
     characteristics.classList.add('product-item__characteristics');
-    const characteristicColor = document.createElement('div');
-    characteristicColor.classList.add('characteristic');
-    characteristicColor.textContent = `Цвет: ${item.color}`;
     //storage-info
     const storageInfo = document.createElement('div');
     storageInfo.classList.add('product-item__storage-info');
@@ -173,12 +245,25 @@ function createProduct(item) {
 
     productItem.appendChild(productItemName);
 
-    characteristics.appendChild(characteristicColor);
+    var tmp = 0;
+    if (item.hasOwnProperty('color')) {
+        const characteristicColor = document.createElement('div');
+        characteristicColor.classList.add('characteristic');
+        characteristicColor.textContent = `Цвет: ${item.color}`;
+        characteristics.appendChild(characteristicColor);
+    }
+    else {
+        tmp += 1;
+    }
+
     if (item.hasOwnProperty('size')) {
         const characteristicSize = document.createElement('div');
         characteristicSize.classList.add('characteristic');
         characteristicSize.textContent = `Размер: ${item.size}`;
         characteristics.appendChild(characteristicSize);
+    }
+    else {
+        tmp += 1;
     }
 
     storageInfoIconContainer.appendChild(storageInfoIcon);
@@ -188,7 +273,9 @@ function createProduct(item) {
     storageInfo.appendChild(storageInfoName);
     storageInfo.appendChild(provider);
 
-    productItem.appendChild(characteristics);
+    if (tmp < 2) {
+        productItem.appendChild(characteristics);
+    }
     productItem.appendChild(storageInfo);
 
     productInfo.appendChild(productInfoIcon);
@@ -232,6 +319,99 @@ function createProduct(item) {
     product.appendChild(productOrder);
 
     products.appendChild(product);
+}
 
+function createOldProduct(item) {
+    console.log(item);
+    const products = document.querySelector('.products__absent');
+    const product = document.createElement('div');
+    product.classList.add('product');
+    product.classList.add('absent__product');
+    // product-info
+    const productInfo = document.createElement('div');
+    productInfo.classList.add('product-info');
+    //product-info__icon
+    const productInfoIcon = document.createElement('div');
+    productInfoIcon.classList.add('product-info__icon');
+    const productInfoCheckbox = document.createElement('input');
+    productInfoCheckbox.type = "checkbox";
+    productInfoCheckbox.id = `product${item.id}`;
+    productInfoCheckbox.name = "product";
+    productInfoCheckbox.value = `product${item.id}`;
+
+    const productInfoImage = document.createElement('img');
+    productInfoImage.src = item.imgURL;
+    productInfoImage.classList.add('product-info__img');
+    productInfoImage.classList.add('absent__img');
+    productInfoCheckbox.alt = "product photo";
+    //product-item
+    const productItem = document.createElement('div');
+    productItem.classList.add('product-item');
+    productItem.classList.add('absent__text');
+    const productItemName = document.createElement('p');
+    productItemName.classList.add('product-item__name');
+    productItemName.textContent = item.productName;
+
+    const characteristics = document.createElement('div');
+    characteristics.classList.add('product-item__characteristics');
+    // product-order
+    const productOrder = document.createElement('div');
+    productOrder.classList.add('absent__product-order');
+    // product-sum
+    const productSumIcons = document.createElement('div');
+    productSumIcons.classList.add('product-sum__icons');
+    const favouriteButton = document.createElement('button');
+    favouriteButton.classList.add('product__button');
+    favouriteButton.classList.add('favourite__button');
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('product__button');
+    deleteButton.classList.add('delete__button');
+    //dom
+    //product-info
+    productInfoIcon.appendChild(productInfoImage);
+
+    productItem.appendChild(productItemName);
+    var tmp = 0;
+    if (item.hasOwnProperty('color')) {
+        const characteristicColor = document.createElement('div');
+        characteristicColor.classList.add('characteristic');
+        characteristicColor.textContent = `Цвет: ${item.color}`;
+        characteristics.appendChild(characteristicColor);
+    }
+    else {
+        tmp += 1;
+    }
+
+    if (item.hasOwnProperty('size')) {
+        const characteristicSize = document.createElement('div');
+        characteristicSize.classList.add('characteristic');
+        characteristicSize.classList.add('absent__text');
+        characteristicSize.textContent = `Размер: ${item.size}`;
+        characteristics.appendChild(characteristicSize);
+    }
+    else {
+        tmp += 1;
+    }
+    if (tmp < 2) {
+        productItem.appendChild(characteristics);
+    }
+    productInfo.appendChild(productInfoIcon);
+    productInfo.appendChild(productItem);
+
+    // favouriteButton.addEventListener('click', clickFavourite);
+    // deleteButton.addEventListener('click', clickDelete);
+    productSumIcons.appendChild(favouriteButton);
+    productSumIcons.appendChild(deleteButton);
+
+    productOrder.appendChild(productSumIcons);
+
+    product.appendChild(productInfo);
+    product.appendChild(productOrder);
+
+    products.appendChild(product);
 }
 createProducts();
+createOldProducts();
+
+const checkButton = document.querySelector('.cart-total__button');
+checkButton.addEventListener('click', validateAll);
