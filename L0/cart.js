@@ -1,54 +1,65 @@
-let products = [
-    {
-        id: 1,
-        imgURL: "icons/photo.svg",
-        productName: "Футболка UZcotton мужская",
-        color: "белый",
-        size: 56,
-        storageName: "Коледино WB",
-        provider: "ООО Вайлдберриз",
-        counter: 1,
-        sumNumber: 2,
-        price: 522,
-        oldPrice: 1051
-    },
+let appState = {
+    resultPrice: 0,
+    totalPrice: 0,
+    isActualHide: false,
+    isAbsentHide: false,
+    products: [
+        {
+            id: 1,
+            imgURL: "icons/photo.svg",
+            productName: "Футболка UZcotton мужская",
+            color: "белый",
+            size: 56,
+            storageName: "Коледино WB",
+            provider: "ООО Вайлдберриз",
+            counter: 1,
+            sumNumber: 2,
+            price: 522,
+            oldPrice: 1051,
+            checked: true
+        },
 
-    {
-        id: 2,
-        imgURL: "icons/photo2.svg",
-        productName: "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
-        color: "прозрачный",
-        storageName: "Коледино WB",
-        provider: "ООО Мегапрофстиль",
-        counter: 200,
-        price: 2100047,
-        oldPrice: 2300047
-    },
+        {
+            id: 2,
+            imgURL: "icons/photo2.svg",
+            productName: "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
+            color: "прозрачный",
+            storageName: "Коледино WB",
+            provider: "ООО Мегапрофстиль",
+            counter: 200,
+            price: 10500.235,
+            oldPrice: 11500.235,
+            checked: true
+        },
 
-    {
-        id: 3,
-        imgURL: "icons/photo3.svg",
-        productName: "Карандаши цветные Faber-Castell \"Замок\", набор 24 цвета, заточенные, шестигранные, Faber-Castell",
-        storageName: "Коледино WB",
-        provider: "ООО Вайлдберриз",
-        counter: 2,
-        sumNumber: 2,
-        price: 494,
-        oldPrice: 950
-    }
-]
+        {
+            id: 3,
+            imgURL: "icons/photo3.svg",
+            productName: "Карандаши цветные Faber-Castell \"Замок\", набор 24 цвета, заточенные, шестигранные, Faber-Castell",
+            storageName: "Коледино WB",
+            provider: "ООО Вайлдберриз",
+            counter: 2,
+            sumNumber: 2,
+            price: 247,
+            oldPrice: 475,
+            checked: true
+        }
+    ]
+}
+
 function formatPrice(price) {
-    return price.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
+    tmpPrice = Math.round(price);
+    return tmpPrice.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
 }
 
 function createProducts() {
-    products.forEach((product) => {
+    appState.products.forEach((product) => {
         createProduct(product);
     });
 }
 
 function createOldProducts() {
-    products.forEach((oldProduct) => {
+    appState.products.forEach((oldProduct) => {
         createOldProduct(oldProduct);
     });
 }
@@ -144,11 +155,13 @@ function createProduct(item) {
     const productInfoIcon = document.createElement('div');
     productInfoIcon.classList.add('product-info__icon');
     const productInfoCheckbox = document.createElement('input');
+    productInfoCheckbox.classList.add('product-checkbox');
     productInfoCheckbox.type = "checkbox";
     productInfoCheckbox.id = `product${item.id}`;
     productInfoCheckbox.name = "product";
     productInfoCheckbox.value = `product${item.id}`;
-
+    productInfoCheckbox.checked = true;
+    productInfoCheckbox.addEventListener('click', productCheckboxChange);
     const productInfoImage = document.createElement('img');
     productInfoImage.src = item.imgURL;
     productInfoImage.classList.add('product-info__img');
@@ -191,13 +204,30 @@ function createProduct(item) {
     const counterMinus = document.createElement('button');
     counterMinus.classList.add('counter__button');
     counterMinus.classList.add('counter__minus');
+    counterMinus.id = `counter__minus${item.id}`;
     counterMinus.textContent = "-";
+    if (item.counter === 1) {
+        counterMinus.classList.add('counter__disabled');
+        counterMinus.disabled = true;
+    }
+    counterMinus.addEventListener('click', counterMinusClicked);
+
     const counterPlus = document.createElement('button');
     counterPlus.classList.add('counter__button');
     counterPlus.classList.add('counter__plus');
+    counterPlus.id = `counter__plus${item.id}`;
     counterPlus.textContent = "+";
+    if (item.hasOwnProperty('sumNumber')) {
+        if (item.counter === item.sumNumber) {
+            counterPlus.classList.add('counter__disabled');
+            counterPlus.disabled = true;
+        }
+    }
+    counterPlus.addEventListener('click', counterPlusClicked);
+
     const counterText = document.createElement('span');
     counterText.classList.add('counter__text');
+    counterText.id = `counter__text${item.id}`;
     counterText.textContent = item.counter;
 
     const productSumIcons = document.createElement('div');
@@ -215,7 +245,8 @@ function createProduct(item) {
     priceActual.classList.add('price__actual');
     const actualTextPrice = document.createElement('p');
     actualTextPrice.classList.add('actual__text');
-    actualTextPrice.textContent = `${formatPrice(item.price)} `;
+    actualTextPrice.id = `actual__price${item.id}`;
+    actualTextPrice.textContent = `${formatPrice(item.price * item.counter)} `;
     if (item.price >= 10000) {
         actualTextPrice.classList.add('smaller-actual__price');
     }
@@ -232,7 +263,8 @@ function createProduct(item) {
     priceOld.classList.add('price__old');
     const OldTextPrice = document.createElement('p');
     OldTextPrice.classList.add('old__text');
-    OldTextPrice.textContent = `${item.oldPrice} `;
+    OldTextPrice.id = `old__text${item.id}`;
+    OldTextPrice.textContent = `${formatPrice(item.oldPrice * item.counter)} `;
     const OldText = document.createElement('p');
     OldText.classList.add('old__text');
     OldText.textContent = "сом";
@@ -410,8 +442,162 @@ function createOldProduct(item) {
 
     products.appendChild(product);
 }
+
+
+function render() {
+    appState.products.forEach((item) => {
+        priceActual = document.querySelector(`#actual__price${item.id}`);
+        priceActual.textContent = `${formatPrice(item.price * item.counter)}`;
+        priceOld = document.querySelector(`#old__text${item.id}`);
+        priceOld.textContent = `${formatPrice(item.oldPrice * item.counter)}`;
+        counterText = document.querySelector(`#counter__text${item.id}`);
+        counterText.textContent = item.counter;
+    });
+
+    resultPrice = document.querySelector('.cost__header__price');
+    appState.resultPrice = appState.products.reduce((result, product) => {
+        if (product.checked) {
+            return result += product.counter * product.price;
+        }
+        return result;
+    }, 0);
+    resultPrice.textContent = `${formatPrice(appState.resultPrice)}`;
+
+    totalPrice = document.querySelector('.cost__item__total__price');
+    appState.totalPrice = appState.products.reduce((result, product) => {
+        if (product.checked) {
+            return result += product.counter * product.oldPrice;
+        }
+        return result;
+    }, 0);
+    totalPrice.textContent = `${formatPrice(appState.totalPrice)}`;
+
+    discount = document.querySelector('.cost__item__discount__price');
+    tmpDiscount = appState.totalPrice - appState.resultPrice;
+    discount.textContent = `${formatPrice(tmpDiscount)}`;
+    button = document.querySelector('.cart-total__button');
+    if (addCheckbox.checked && appState.resultPrice > 0) {
+        button.textContent = `Оплатить ${formatPrice(appState.resultPrice)} сом`;
+    }
+    else {
+        button.textContent = 'Заказать';
+    }
+}
+
+function checkboxAllChange() {
+    const productCheckboxes = document.querySelectorAll('.product-checkbox');
+    if (this.checked) {
+        appState.products.forEach((item) => {
+            item.checked = true;
+        });
+        productCheckboxes.forEach((checkbox) => {
+            checkbox.checked = true;
+        });
+    }
+    else {
+        appState.products.forEach((item) => {
+            item.checked = false;
+        });
+        productCheckboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+    }
+    render();
+}
+
+function productCheckboxChange() {
+    checkboxId = parseInt(this.id.slice(-1));
+    if (this.checked) {
+        appState.products[checkboxId - 1].checked = true;
+    }
+    else {
+        appState.products[checkboxId - 1].checked = false;
+    }
+    render();
+}
+
+function counterMinusClicked() {
+    counterId = parseInt(this.id.slice(-1));
+    appState.products[counterId - 1].counter--;
+    if (appState.products[counterId - 1].hasOwnProperty('sumNumber')) {
+        if (appState.products[counterId - 1].counter < appState.products[counterId - 1].sumNumber) {
+            tmpCounterPlus = document.querySelector(`#counter__plus${counterId}`);
+            tmpCounterPlus.classList.remove('counter__disabled');
+            tmpCounterPlus.disabled = false;
+        }
+    }
+    if (appState.products[counterId - 1].counter === 1) {
+        tmpCounterMinus = document.querySelector(`#counter__minus${counterId}`);
+        tmpCounterMinus.classList.add('counter__disabled');
+        tmpCounterMinus.disabled = true;
+    }
+    render();
+}
+
+function counterPlusClicked() {
+    counterId = parseInt(this.id.slice(-1));
+    appState.products[counterId - 1].counter++;
+    if (appState.products[counterId - 1].hasOwnProperty('sumNumber')) {
+        if (appState.products[counterId - 1].counter === appState.products[counterId - 1].sumNumber) {
+            tmpCounterPlus = document.querySelector(`#counter__plus${counterId}`);
+            tmpCounterPlus.classList.add('counter__disabled');
+            tmpCounterPlus.disabled = true;
+        }
+    }
+    tmpCounterMinus = document.querySelector(`#counter__minus${counterId}`);
+    if (appState.products[counterId - 1].counter === 1) {
+        tmpCounterMinus.classList.add('counter__disabled');
+        tmpCounterMinus.disabled = true;
+    }
+    else {
+        tmpCounterMinus.classList.remove('counter__disabled');
+        tmpCounterMinus.disabled = false;
+    }
+    render();
+}
+
+function checkboxAddChange() {
+    render();
+}
+
+function actualButtonChange() {
+    console.log('lol')
+    products = document.querySelector('.in-stock__products');
+    if (appState.isActualHide) {
+        appState.isActualHide = false;
+        products.style.display = 'flex';
+    }
+    else {
+        appState.isActualHide = true;
+        products.style.display = 'none';
+    }
+}
+
+function absentButtonChange() {
+    products = document.querySelector('.products__absent');
+    if (appState.isAbsentHide) {
+        appState.isAbsentHide = false;
+        products.style.display = 'flex';
+    }
+    else {
+        appState.isAbsentHide = true;
+        products.style.display = 'none';
+    }
+}
+
 createProducts();
 createOldProducts();
 
+const checkboxAll = document.querySelector('#all');
+checkboxAll.addEventListener('change', checkboxAllChange);
+
+const addCheckbox = document.querySelector('#add__checkbox');
+addCheckbox.addEventListener('change', checkboxAddChange);
+
 const checkButton = document.querySelector('.cart-total__button');
-checkButton.addEventListener('click', validateAll);
+checkButton.addEventListener('change', validateAll);
+
+const actualButton = document.querySelector('.actual__products__button');
+const absentButton = document.querySelector('.absent__products__button');
+actualButton.addEventListener('click', actualButtonChange);
+absentButton.addEventListener('click', absentButtonChange);

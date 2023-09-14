@@ -6,6 +6,7 @@
     --accent-color: #CB11AB;
     --sign-color: #F55123;
     --green-color: #0CB477;
+    --disabled-color: rgba(0, 0, 0, 0.2);
     --rulers-green-color: rgba(12, 180, 119, 0.2);
     --rulers-magenta-color: rgba(203, 17, 171, 0.2);
     --rulers-color: rgba(0, 0, 0, 0.2);
@@ -299,6 +300,10 @@ main * {
     font-size: var(--text-lead-size);
 }
 
+.counter__disabled {
+    color: var(--disabled-color);
+}
+
 .product-sum__text {
     font-size: var(--text-caption-size);
     color: var(--sign-color);
@@ -313,6 +318,10 @@ main * {
 .product__button {
     width: 20px;
     height: 20px;
+}
+
+.product__button:hover {
+    filter: invert(40%) sepia(35%) saturate(2720%) hue-rotate(344deg) brightness(96%) contrast(100%);
 }
 
 .favourite__button {
@@ -653,6 +662,7 @@ main * {
 .cost__header__container {
     flex-direction: row;
     align-items: baseline;
+    gap: 4px;
 }
 
 .cost__header__text {
@@ -678,6 +688,10 @@ main * {
 
 .cost__item * {
     flex-direction: row;
+}
+
+.cost__item__price__container {
+    gap: 4px;
 }
 
 .cart-total__header {
