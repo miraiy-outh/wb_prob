@@ -3,6 +3,9 @@ let appState = {
     totalPrice: 0,
     isActualHide: false,
     isAbsentHide: false,
+    cardId: 1,
+    pointId: 1,
+    addressId: 0,
     products: [
         {
             id: 1,
@@ -44,7 +47,119 @@ let appState = {
             oldPrice: 475,
             checked: true
         }
+    ],
+
+    cards: [
+        {
+            id: 1,
+            imgURL: "icons/mir.svg",
+            numberCard: "1234 56•• •••• 1234"
+        },
+
+        {
+            id: 2,
+            imgURL: "icons/visa.svg",
+            numberCard: "1234 56•• •••• 1234"
+        },
+
+        {
+            id: 3,
+            imgURL: "icons/mastercard.svg",
+            numberCard: "1234 56•• •••• 1234"
+        },
+
+        {
+            id: 4,
+            imgURL: "icons/maestro.svg",
+            numberCard: "1234 56•• •••• 1234"
+        }
+    ],
+
+    points: [
+        {
+            id: 1,
+            text: "г. Бишкек, микрорайон Джал, улица Ахунбаева Исы, д. 67/1"
+        },
+
+        {
+            id: 2,
+            text: "г. Бишкек, микрорайон Джал, улица Ахунбаева Исы, д. 67/1",
+            rating: 4.99
+        },
+
+        {
+            id: 3,
+            text: "г. Бишкек, улица Табышалиева, д. 57",
+            rating: 4.99
+        }
+    ],
+
+    addresses: [
+        {
+            id: 1,
+            text: "Бишкек, улица Табышалиева, 57"
+        },
+
+        {
+            id: 2,
+            text: "Бишкек, улица Жукеева-Пудовкина, 77/1"
+        },
+
+        {
+            id: 3,
+            text: "Бишкек, микрорайон Джал, улица Ахунбаева Исы, 67/1"
+        }
     ]
+}
+function render() {
+    //price
+    appState.products.forEach((item) => {
+        priceActual = document.querySelector(`#actual__price${item.id}`);
+        priceActual.textContent = `${formatPrice(item.price * item.counter)}`;
+        priceOld = document.querySelector(`#old__text${item.id}`);
+        priceOld.textContent = `${formatPrice(item.oldPrice * item.counter)}`;
+        counterText = document.querySelector(`#counter__text${item.id}`);
+        counterText.textContent = item.counter;
+    });
+
+    resultPrice = document.querySelector('.cost__header__price');
+    appState.resultPrice = appState.products.reduce((result, product) => {
+        if (product.checked) {
+            return result += product.counter * product.price;
+        }
+        return result;
+    }, 0);
+    resultPrice.textContent = `${formatPrice(appState.resultPrice)}`;
+
+    totalPrice = document.querySelector('.cost__item__total__price');
+    appState.totalPrice = appState.products.reduce((result, product) => {
+        if (product.checked) {
+            return result += product.counter * product.oldPrice;
+        }
+        return result;
+    }, 0);
+    totalPrice.textContent = `${formatPrice(appState.totalPrice)}`;
+
+    discount = document.querySelector('.cost__item__discount__price');
+    tmpDiscount = appState.totalPrice - appState.resultPrice;
+    discount.textContent = `${formatPrice(tmpDiscount)}`;
+    button = document.querySelector('.cart-total__button');
+    if (addCheckbox.checked && appState.resultPrice > 0) {
+        button.textContent = `Оплатить ${formatPrice(appState.resultPrice)} сом`;
+    }
+    else {
+        button.textContent = 'Заказать';
+    }
+
+    //card
+    cardInfoIcons = document.querySelectorAll('.card-info__icon__change');
+    cardInfoIcons.forEach((cardInfoIcon) => {
+        cardInfoIcon.src = appState.cards[appState.cardId - 1].imgURL;
+    });
+    cardInfoDataTexts = document.querySelectorAll('.card-info__data__text__change');
+    cardInfoDataTexts.forEach((cardInfoDataText) => {
+        cardInfoDataText.textContent = appState.cards[appState.cardId - 1].numberCard;
+    });
 }
 
 function formatPrice(price) {
@@ -70,6 +185,7 @@ const email = document.querySelector('#email');
 const phoneNumber = document.querySelector('#phone-number');
 const inn = document.querySelector('#inn');
 
+// validation
 function validateFirstName() {
     var nameInputValue = firstName.value;
     var nameCheck = (/^[a-zA-Zа-яА-Я]+$/).test(nameInputValue);
@@ -126,7 +242,6 @@ function validateInn() {
 }
 
 function validateAll() {
-    console.log('lol');
 
     validateFirstName();
     validateLastName();
@@ -142,6 +257,7 @@ function validateAll() {
 
 }
 
+// create products in-stock and absent
 function createProduct(item) {
     const products = document.querySelector('.in-stock__products');
     const product = document.createElement('div');
@@ -354,7 +470,6 @@ function createProduct(item) {
 }
 
 function createOldProduct(item) {
-    console.log(item);
     const products = document.querySelector('.products__absent');
     const product = document.createElement('div');
     product.classList.add('product');
@@ -443,47 +558,7 @@ function createOldProduct(item) {
     products.appendChild(product);
 }
 
-
-function render() {
-    appState.products.forEach((item) => {
-        priceActual = document.querySelector(`#actual__price${item.id}`);
-        priceActual.textContent = `${formatPrice(item.price * item.counter)}`;
-        priceOld = document.querySelector(`#old__text${item.id}`);
-        priceOld.textContent = `${formatPrice(item.oldPrice * item.counter)}`;
-        counterText = document.querySelector(`#counter__text${item.id}`);
-        counterText.textContent = item.counter;
-    });
-
-    resultPrice = document.querySelector('.cost__header__price');
-    appState.resultPrice = appState.products.reduce((result, product) => {
-        if (product.checked) {
-            return result += product.counter * product.price;
-        }
-        return result;
-    }, 0);
-    resultPrice.textContent = `${formatPrice(appState.resultPrice)}`;
-
-    totalPrice = document.querySelector('.cost__item__total__price');
-    appState.totalPrice = appState.products.reduce((result, product) => {
-        if (product.checked) {
-            return result += product.counter * product.oldPrice;
-        }
-        return result;
-    }, 0);
-    totalPrice.textContent = `${formatPrice(appState.totalPrice)}`;
-
-    discount = document.querySelector('.cost__item__discount__price');
-    tmpDiscount = appState.totalPrice - appState.resultPrice;
-    discount.textContent = `${formatPrice(tmpDiscount)}`;
-    button = document.querySelector('.cart-total__button');
-    if (addCheckbox.checked && appState.resultPrice > 0) {
-        button.textContent = `Оплатить ${formatPrice(appState.resultPrice)} сом`;
-    }
-    else {
-        button.textContent = 'Заказать';
-    }
-}
-
+// count price
 function checkboxAllChange() {
     const productCheckboxes = document.querySelectorAll('.product-checkbox');
     if (this.checked) {
@@ -560,8 +635,8 @@ function checkboxAddChange() {
     render();
 }
 
+// show/hide products
 function actualButtonChange() {
-    console.log('lol')
     products = document.querySelector('.in-stock__products');
     if (appState.isActualHide) {
         appState.isActualHide = false;
@@ -584,6 +659,117 @@ function absentButtonChange() {
         products.style.display = 'none';
     }
 }
+
+//subwindows
+function radioCheck() {
+    if (this.checked) {
+        var tmpId = parseInt(this.id.slice(-1));
+        appState.cardId = tmpId;
+    }
+}
+
+function createCardsWindow() {
+    appState.cards.forEach((card) => {
+        createCardWindow(card);
+    });
+}
+function createCardWindow(item) {
+    cardRadioContainer = document.querySelector('.card__radio__container');
+    cardRadioItem = document.createElement('div');
+    cardRadioItem.classList.add('window__radio__item');
+    cardRadioItem.classList.add('card__radio__item');
+
+    radio = document.createElement('input');
+    radio.classList.add('radio__window');
+    radio.type = 'radio';
+    radio.id = `card${item.id}`;
+    radio.name = 'card';
+    radio.addEventListener('click', radioCheck);
+
+    labelRadio = document.createElement('label');
+    labelRadio.for = `card${item.id}`;
+    labelRadio.classList.add('card__radio__label');
+
+    cardInfoContainer = document.createElement('div');
+    cardInfoContainer.classList.add('card-info__container');
+    cardInfoIconContainer = document.createElement('div');
+    cardInfoIconContainer.classList.add('card-info__icon__container');
+    cardInfoIcon = document.createElement('img');
+    cardInfoIcon.classList.add('card-info__icon');
+    cardInfoIcon.src = item.imgURL;
+    cardInfoIcon.alt = 'card icon';
+    cardInfoData = document.createElement('div');
+    cardInfoData.classList.add('card-info__data');
+    cardInfoDataText = document.createElement('p');
+    cardInfoDataText.classList.add('card-info__data__text');
+    cardInfoDataText.textContent = item.numberCard;
+
+    cardInfoIconContainer.appendChild(cardInfoIcon);
+    cardInfoData.appendChild(cardInfoDataText);
+
+    cardInfoContainer.appendChild(cardInfoIconContainer);
+    cardInfoContainer.appendChild(cardInfoData);
+    labelRadio.appendChild(cardInfoContainer);
+
+    cardRadioItem.appendChild(radio);
+    cardRadioItem.appendChild(labelRadio);
+    cardRadioContainer.appendChild(cardRadioItem);
+}
+createCardsWindow();
+
+function closeWindow() {
+    windowsContainer = document.querySelectorAll('.windows__container');
+    windowsContainer.forEach((windowContainer) => {
+        windowContainer.style.display = 'none';
+    });
+    body = document.querySelector('body');
+    body.style.removeProperty('overflow');
+    render();
+}
+
+closeButtons = document.querySelectorAll('.close__button');
+closeButtons.forEach((closeButton) => {
+    closeButton.addEventListener('click', closeWindow);
+});
+chooseButtons = document.querySelectorAll('.choose__button');
+chooseButtons.forEach((chooseButton) => {
+    chooseButton.addEventListener('click', closeWindow);
+});
+
+function openSubWindowCard() {
+    cardContainer = document.querySelector('.card__container');
+    cardContainer.style.display = 'block';
+    body = document.querySelector('body');
+    body.style.overflow = 'hidden';
+}
+
+cardChangeButtons = document.querySelectorAll('.change__card__button');
+cardChangeButtons.forEach((button) => {
+    button.addEventListener('click', openSubWindowCard);
+})
+
+// resize page
+function handleResize() {
+    const viewportWidth = window.innerWidth;
+    const main = document.querySelector('main');
+    const mainContainer = document.querySelector('.main__container');
+
+    const header = document.querySelector('header');
+    const headerContainer = document.querySelector('.header__container');
+    if (main.offsetWidth >= 1400) {
+        main.style.display = 'flex';
+        header.style.display = 'flex';
+        mainContainer.style.width = '1400px';
+        headerContainer.style.width = '1400px';
+    }
+    else {
+        main.style.display = 'block';
+        header.style.display = 'block';
+        mainContainer.style.removeProperty('width');
+        headerContainer.style.removeProperty('width');
+    }
+}
+window.addEventListener('resize', handleResize);
 
 createProducts();
 createOldProducts();
