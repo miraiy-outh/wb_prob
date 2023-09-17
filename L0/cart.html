@@ -167,19 +167,20 @@
                             <div class="delivery-info__delivery-way">
                                 <div class="order-info__header">
                                     <h2 class="order-info__header__text">Способ доставки</h2>
-                                    <button class="order-info__button">Изменить</button>
+                                    <button class="order-info__button change__point__button">Изменить</button>
                                 </div>
 
                                 <div class="delivery-way__info">
                                     <div class="delivery-way__info__item">
                                         <p class="delivery-way__info__item__header">Пункт выдачи</p>
                                         <div class="delivery-way__subitem delivery-way__point">
-                                            <p class="delivery-way__info__item__text">Бишкек, улица Ахматбека Суюмбаева,
+                                            <p class="delivery-way__info__item__text point-info__data__text__change">
+                                                Бишкек, улица Ахматбека Суюмбаева,
                                                 12/1</p>
-                                            <div class="delivery-way__rating-container">
+                                            <div class="delivery-way__rating-container point__rating__container">
                                                 <div class="rating">
                                                     <img src="icons/rating.svg" alt="rating star">
-                                                    <p class="delivery-way__info__item__subtext">4.99</p>
+                                                    <p class="delivery-way__info__item__subtext point__rating">4.99</p>
                                                 </div>
                                                 <p class="delivery-way__info__item__subtext">Ежедневно с 10 до 21</p>
                                             </div>
@@ -194,20 +195,30 @@
                                     <div class="delivery-way__info__item">
                                         <p class="delivery-way__info__item__header">5—6 февраля</p>
                                         <div class="delivery-way__info__item__images delivery-way__subitem">
-                                            <img src="icons/photo.svg" class="delivery-way__info__item__image"
-                                                alt="product photo">
-                                            <img src="icons/photo2.svg" class="delivery-way__info__item__image"
-                                                alt="product photo">
-                                            <img src="icons/photo3.svg" class="delivery-way__info__item__image"
-                                                alt="product photo">
+                                            <div class="delivery-way__info__item__image__container">
+                                                <img src="icons/photo.svg" class="delivery-way__info__item__image"
+                                                    id="product-image1" alt="product photo">
+                                            </div>
+
+                                            <div class="delivery-way__info__item__image__container">
+                                                <img src="icons/photo2.svg" class="delivery-way__info__item__image"
+                                                    id="product-image2" alt="product photo">
+                                            </div>
+
+                                            <div class="delivery-way__info__item__image__container">
+                                                <img src="icons/photo3.svg" class="delivery-way__info__item__image"
+                                                    id="product-image3" alt="product photo">
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="delivery-way__info__item">
+                                    <div class="delivery-way__info__item delivery-way__info__item__dot">
                                         <p class="delivery-way__info__item__header">7—8 февраля</p>
                                         <p class="delivery-way__info__item__images delivery-way__subitem">
+                                        <div class="delivery-way__info__item__image__container">
                                             <img src="icons/photo2.svg" class="delivery-way__info__item__image"
-                                                alt="product photo">
+                                                id="product-image4" alt="product photo">
+                                        </div>
                                         </p>
                                     </div>
                                 </div>
@@ -359,10 +370,11 @@
                     <div class="cart-total__item">
                         <div class="cart-total__header">
                             <h3 class="cart-total__header__text">Доставка в пункт выдачи</h3>
-                            <button class="cart-total__change__button"></button>
+                            <button class="cart-total__change__button change__point__button"></button>
                         </div>
 
-                        <p class="cart-total__text">Бишкек, улица Ахматбека Суюмбаева, 12/1</p>
+                        <p class="cart-total__text point-info__data__text__change">Бишкек, улица Ахматбека Суюмбаева,
+                            12/1</p>
                         <div class="point__info__date">
                             <p class="cart-total__text cart-total__text__date">5-8 фев</p>
                         </div>
@@ -466,29 +478,17 @@
             </div>
 
             <div class="point__change-way">
-                <button class="change-way__button">В пункт выдачи</button>
-                <button class="change-way__button">Курьером</button>
+                <button class="change-way__button point__button choosed">В пункт выдачи</button>
+                <button class="change-way__button address__button">Курьером</button>
             </div>
 
             <p class="address_header">Мои адреса</p>
 
             <div class="window__radio__container point__radio__container">
-                <div class="window__radio__item__container">
+                <!-- <div class="window__radio__item__container">
                     <div class="window__radio__item">
                         <input type="radio" class="radio__window" id="point1" name="point" />
                         <label for="point1" class="window__radio__label">
-                            <p class="point__radio__text">Бишкек, улица Табышалиева, 57</p>
-                        </label>
-                    </div>
-                    <button class="product__button delete__button window__delete__button"></button>
-                </div>
-            </div>
-
-            <div class="window__radio__container address__radio__container">
-                <div class="window__radio__item__container">
-                    <div class="window__radio__item">
-                        <input type="radio" class="radio__window" id="address1" name="address" />
-                        <label for="address1" class="window__radio__label">
                             <div class="delivery-way__subitem delivery-way__point window__point__label">
                                 <p class="delivery-way__info__item__text point__radio__text">г. Бишкек, микрорайон Джал,
                                     улица
@@ -500,13 +500,25 @@
                                         <img src="icons/rating.svg" alt="rating star">
                                         <p class="delivery-way__info__item__subtext">4.99</p>
                                     </div>
-                                    <p class="delivery-way__info__item__subtext">Пункт выдачи</p>
+                                    <p class="delivery-way__info__item__subtext point__rating__subtext">Пункт выдачи</p>
                                 </div>
                             </div>
                         </label>
                     </div>
                     <button class="product__button delete__button window__delete__button"></button>
-                </div>
+                </div> -->
+            </div>
+
+            <div class="window__radio__container address__radio__container">
+                <!-- <div class="window__radio__item__container">
+                    <div class="window__radio__item">
+                        <input type="radio" class="radio__window" id="address1" name="address" />
+                        <label for="address1" class="window__radio__label">
+                            <p class="address__radio__text">Бишкек, улица Табышалиева, 57</p>
+                        </label>
+                    </div>
+                    <button class="product__button delete__button window__delete__button"></button>
+                </div> -->
             </div>
 
             <button class="choose__button">Выбрать</button>

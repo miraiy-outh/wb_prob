@@ -151,6 +151,47 @@ function render() {
         button.textContent = 'Заказать';
     }
 
+    //dots
+    for (let i = 0; i < 4; i++) {
+        dotContainer = document.querySelector(`#dot-container${i}`);
+        dot = document.querySelector(`#dot${i}`);
+        if (i != 1 && i != 3) {
+            if (appState.products[i].counter > 1) {
+                dotContainer.style.display = 'flex';
+                if (appState.products[i].counter > 9) {
+                    dotContainer.classList.add('dot__container__larger');
+                }
+                else {
+                    dotContainer.classList.remove('dot__container__larger');
+                }
+            }
+            else {
+                dotContainer.style.display = 'none';
+            }
+            dot.textContent = appState.products[i].counter;
+        }
+        if (i === 1) {
+            deliveryInfoItem = document.querySelector('.delivery-way__info__item__dot');
+            if (appState.products[i].counter > 184) {
+                deliveryInfoItem.style.display = 'flex';
+                dot.textContent = 184;
+                subDot = document.querySelector(`#dot${i + 2}`);
+                subDot.textContent = appState.products[i].counter - 184;
+                subDotContainer = document.querySelector(`#dot-container${i + 2}`);
+                if (appState.products[i].counter - 184 < 2) {
+                    subDotContainer.style.display = 'none';
+                }
+                else {
+                    subDotContainer.style.display = 'flex';
+                }
+            }
+            else {
+                deliveryInfoItem.style.display = 'none';
+                dot.textContent = appState.products[i].counter;
+            }
+        }
+    }
+
     //card
     cardInfoIcons = document.querySelectorAll('.card-info__icon__change');
     cardInfoIcons.forEach((cardInfoIcon) => {
@@ -159,6 +200,29 @@ function render() {
     cardInfoDataTexts = document.querySelectorAll('.card-info__data__text__change');
     cardInfoDataTexts.forEach((cardInfoDataText) => {
         cardInfoDataText.textContent = appState.cards[appState.cardId - 1].numberCard;
+    });
+
+    //point-address
+    pointInfoDataTexts = document.querySelectorAll('.point-info__data__text__change');
+    pointRatingContainer = document.querySelector('.point__rating__container');
+    pointInfoDataTexts.forEach((pointInfoDataText) => {
+        if (appState.addressId === 0) {
+            pointRatingContainer.style.display = 'flex';
+            pointInfoDataText.textContent = appState.points[appState.pointId - 1].text;
+            pointRating = document.querySelector('.point__rating');
+            if (appState.points[appState.pointId - 1].hasOwnProperty('rating')) {
+                pointRating.style.display = 'flex';
+                pointRating.textContent = appState.points[appState.pointId - 1].rating;
+            }
+            else {
+                pointRating.style.display = 'none';
+            }
+        }
+        else {
+            pointInfoDataText.textContent = appState.addresses[appState.addressId - 1].text;
+            pointRatingContainer.style.display = 'none';
+        }
+
     });
 }
 
@@ -184,6 +248,53 @@ const lastName = document.querySelector('#last-name');
 const email = document.querySelector('#email');
 const phoneNumber = document.querySelector('#phone-number');
 const inn = document.querySelector('#inn');
+
+
+//create dots
+function createDots() {
+    //cart dot
+    cart = document.querySelector('.cart');
+    dotContainer = document.createElement('div');
+    dotContainer.classList.add('dot__container');
+    dotContainer.classList.add('dot__container__cart');
+    dot = document.createElement('p');
+    dot.classList.add('dot');
+    dot.classList.add('dot__cart');
+    dot.textContent = '3';
+    dotContainer.appendChild(dot);
+    cart.appendChild(dotContainer);
+
+    //product dots
+    productImageContainers = document.querySelectorAll('.delivery-way__info__item__image__container');
+    for (let i = 0; i < 4; i++) {
+        dotContainer = document.createElement('div');
+        dotContainer.classList.add('dot__container');
+        dotContainer.classList.add('dot__container__product');
+        dotContainer.id = `dot-container${i}`;
+        if (i === 0) {
+            dotContainer.style.display = 'none';
+        }
+        dot = document.createElement('p');
+        dot.classList.add('dot');
+        dot.classList.add('dot__product');
+        dot.id = `dot${i}`;
+        if (i != 1 && i != 3) {
+            dot.textContent = appState.products[i].counter;
+        }
+        if (i === 1) {
+            dot.textContent = 184;
+        }
+        if (i === 3) {
+            dot.textContent = appState.products[i - 2].counter - 184;
+        }
+        if (dot.textContent > 9) {
+            dotContainer.classList.add('dot__container__larger');
+        }
+        dotContainer.appendChild(dot);
+        productImageContainers[i].appendChild(dotContainer);
+    }
+}
+createDots();
 
 // validation
 function validateFirstName() {
@@ -661,10 +772,26 @@ function absentButtonChange() {
 }
 
 //subwindows
-function radioCheck() {
+function radioCardCheck() {
     if (this.checked) {
         var tmpId = parseInt(this.id.slice(-1));
         appState.cardId = tmpId;
+    }
+}
+
+function radioPointCheck() {
+    if (this.checked) {
+        var tmpId = parseInt(this.id.slice(-1));
+        appState.pointId = tmpId;
+        appState.addressId = 0;
+    }
+}
+
+function radioAddressCheck() {
+    if (this.checked) {
+        var tmpId = parseInt(this.id.slice(-1));
+        appState.pointId = 0;
+        appState.addressId = tmpId;
     }
 }
 
@@ -673,6 +800,19 @@ function createCardsWindow() {
         createCardWindow(card);
     });
 }
+
+function createPointsWindow() {
+    appState.points.forEach((point) => {
+        createPointWindow(point);
+    });
+}
+
+function createAddressesWindow() {
+    appState.addresses.forEach((address) => {
+        createAddressWindow(address);
+    });
+}
+
 function createCardWindow(item) {
     cardRadioContainer = document.querySelector('.card__radio__container');
     cardRadioItem = document.createElement('div');
@@ -681,14 +821,15 @@ function createCardWindow(item) {
 
     radio = document.createElement('input');
     radio.classList.add('radio__window');
+    radio.classList.add('card__radio__window');
     radio.type = 'radio';
     radio.id = `card${item.id}`;
     radio.name = 'card';
-    radio.addEventListener('click', radioCheck);
+    radio.addEventListener('click', radioCardCheck);
 
     labelRadio = document.createElement('label');
     labelRadio.for = `card${item.id}`;
-    labelRadio.classList.add('card__radio__label');
+    labelRadio.classList.add('window__radio__label');
 
     cardInfoContainer = document.createElement('div');
     cardInfoContainer.classList.add('card-info__container');
@@ -715,15 +856,144 @@ function createCardWindow(item) {
     cardRadioItem.appendChild(labelRadio);
     cardRadioContainer.appendChild(cardRadioItem);
 }
-createCardsWindow();
 
+function createPointWindow(item) {
+    pointRadioContainer = document.querySelector('.point__radio__container');
+    pointRadioItemContainer = document.createElement('div');
+    pointRadioItemContainer.classList.add('window__radio__item__container');
+    pointRadioItem = document.createElement('div');
+    pointRadioItem.classList.add('window__radio__item');
+
+    radio = document.createElement('input');
+    radio.classList.add('radio__window');
+    radio.type = 'radio';
+    radio.id = `point${item.id}`;
+    radio.name = 'point';
+    radio.addEventListener('click', radioPointCheck);
+
+    labelRadio = document.createElement('label');
+    labelRadio.for = `point${item.id}`;
+    labelRadio.classList.add('window__radio__label');
+
+    windowPointLabel = document.createElement('div');
+    windowPointLabel.classList.add('delivery-way__subitem');
+    windowPointLabel.classList.add('delivery-way__point');
+    windowPointLabel.classList.add('window__point__label');
+
+    pointRadioText = document.createElement('p');
+    pointRadioText.classList.add('delivery-way__info__item__text');
+    pointRadioText.classList.add('point__radio__text');
+    pointRadioText.textContent = item.text;
+
+    ratingContainer = document.createElement('div');
+    ratingContainer.classList.add('delivery-way__rating-container');
+    rating = document.createElement('div');
+    rating.classList.add('rating');
+    ratingIcon = document.createElement('img');
+    ratingIcon.src = 'icons/rating.svg';
+    ratingIcon.alt = 'rating star';
+    ratingText = document.createElement('p');
+    ratingText.classList.add('delivery-way__info__item__subtext');
+    ratingText.classList.add('point__rating__subtext');
+    ratingText.textContent = 'Пункт выдачи';
+
+    deleteButton = document.createElement('button');
+    deleteButton.classList.add('product__button');
+    deleteButton.classList.add('delete__button');
+    deleteButton.classList.add('window__delete__button');
+
+    rating.appendChild(ratingIcon);
+    if (item.hasOwnProperty('rating')) {
+        ratingSubtext = document.createElement('p');
+        ratingSubtext.classList.add('delivery-way__info__item__subtext');
+        ratingSubtext.textContent = item.rating;
+        rating.appendChild(ratingSubtext);
+    }
+    ratingContainer.appendChild(rating);
+    ratingContainer.appendChild(ratingText);
+
+    windowPointLabel.appendChild(pointRadioText);
+    windowPointLabel.appendChild(ratingContainer);
+    labelRadio.appendChild(windowPointLabel);
+
+    pointRadioItem.appendChild(radio);
+    pointRadioItem.appendChild(labelRadio);
+    pointRadioItemContainer.appendChild(pointRadioItem);
+    pointRadioItemContainer.appendChild(deleteButton);
+    pointRadioContainer.appendChild(pointRadioItemContainer);
+}
+
+function createAddressWindow(item) {
+    addressRadioContainer = document.querySelector('.address__radio__container');
+    addressRadioItemContainer = document.createElement('div');
+    addressRadioItemContainer.classList.add('window__radio__item__container');
+    addressRadioItem = document.createElement('div');
+    addressRadioItem.classList.add('window__radio__item');
+
+    radio = document.createElement('input');
+    radio.classList.add('radio__window');
+    radio.type = 'radio';
+    radio.id = `address${item.id}`;
+    radio.name = 'address';
+    radio.addEventListener('click', radioAddressCheck);
+
+    labelRadio = document.createElement('label');
+    labelRadio.for = `address${item.id}`;
+    labelRadio.classList.add('window__radio__label');
+
+    addressRadioText = document.createElement('p');
+    addressRadioText.classList.add('address__radio__text');
+    addressRadioText.textContent = item.text;
+
+    deleteButton = document.createElement('button');
+    deleteButton.classList.add('product__button');
+    deleteButton.classList.add('delete__button');
+    deleteButton.classList.add('window__delete__button');
+
+    labelRadio.appendChild(addressRadioText);
+    addressRadioItem.appendChild(radio);
+    addressRadioItem.appendChild(labelRadio);
+    addressRadioItemContainer.appendChild(addressRadioItem);
+    addressRadioItemContainer.appendChild(deleteButton);
+    addressRadioContainer.appendChild(addressRadioItemContainer);
+}
+
+createCardsWindow();
+createPointsWindow();
+createAddressesWindow();
+
+// choose point/address
+pointButton = document.querySelector('.point__button');
+addressButton = document.querySelector('.address__button');
+addressButton.addEventListener('click', changedWayAddress);
+
+pointRadioContainer = document.querySelector('.point__radio__container');
+addressRadioContainer = document.querySelector('.address__radio__container');
+
+function changedWayAddress() {
+    addressButton.removeEventListener('click', changedWayAddress);
+    addressButton.classList.add('choosed');
+    pointButton.classList.remove('choosed');
+    pointButton.addEventListener('click', changedWayPoint);
+    pointRadioContainer.style.display = 'none';
+    addressRadioContainer.style.display = 'flex';
+}
+
+function changedWayPoint() {
+    addressButton.addEventListener('click', changedWayAddress);
+    addressButton.classList.remove('choosed');
+    pointButton.classList.add('choosed');
+    addressButton.removeEventListener('click', changedWayPoint);
+    pointRadioContainer.style.display = 'flex';
+    addressRadioContainer.style.display = 'none';
+}
+
+//close subwindow
 function closeWindow() {
     windowsContainer = document.querySelectorAll('.windows__container');
     windowsContainer.forEach((windowContainer) => {
         windowContainer.style.display = 'none';
     });
-    body = document.querySelector('body');
-    body.style.removeProperty('overflow');
     render();
 }
 
@@ -736,16 +1006,25 @@ chooseButtons.forEach((chooseButton) => {
     chooseButton.addEventListener('click', closeWindow);
 });
 
+//open subwindows
 function openSubWindowCard() {
     cardContainer = document.querySelector('.card__container');
     cardContainer.style.display = 'block';
-    body = document.querySelector('body');
-    body.style.overflow = 'hidden';
+}
+
+function openSubWindowPoint() {
+    cardContainer = document.querySelector('.point__container');
+    cardContainer.style.display = 'block';
 }
 
 cardChangeButtons = document.querySelectorAll('.change__card__button');
 cardChangeButtons.forEach((button) => {
     button.addEventListener('click', openSubWindowCard);
+})
+
+pointChangeButtons = document.querySelectorAll('.change__point__button');
+pointChangeButtons.forEach((button) => {
+    button.addEventListener('click', openSubWindowPoint);
 })
 
 // resize page

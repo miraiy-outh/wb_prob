@@ -3,6 +3,7 @@
     --second-bg-color: #f6f6fa;
     --smoky-bg-color: #F6F6FA;
     --gray-text-color: #9797AF;
+    --light-gray-text-color: #A0A0A4;
     --accent-color: #CB11AB;
     --accent-color-button: rgba(203, 17, 171, 0.15);
     --sign-color: #F55123;
@@ -117,6 +118,11 @@ header * {
 
 }
 
+.search-form__text::placeholder {
+    color: white;
+    opacity: 0.5;
+    line-height: 24px;
+}
 
 input {
     outline: none;
@@ -144,6 +150,10 @@ input {
 .profile,
 .cart {
     gap: 5px;
+}
+
+.cart {
+    position: relative;
 }
 
 .menu__text {
@@ -500,6 +510,10 @@ main * {
 .delivery-way__subitem {
     margin-left: 32px;
     gap: 8px;
+}
+
+.delivery-way__info__item__image__container {
+    position: relative;
 }
 
 .delivery-way__info__item__image {
@@ -929,7 +943,7 @@ main * {
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
-    margin: 16px 24px 13px;
+    margin: 16px 20px 13px 24px;
 }
 
 .window__header__name {
@@ -942,6 +956,7 @@ main * {
 .close__button {
     width: 20px;
     height: 20px;
+
     border: 0px solid white;
     background: url(icons/search-close.svg) no-repeat center center;
 }
@@ -962,7 +977,7 @@ main * {
 }
 
 .window__radio__item__container {
-    margin-right: 22px;
+    padding-right: 22px;
     justify-content: baseline;
     align-items: flex-start;
     gap: 8px;
@@ -970,7 +985,11 @@ main * {
 }
 
 .radio__window {
-    margin-top: 9px;
+    margin-top: 13px;
+}
+
+.card__radio__window {
+    margin-top: 4px;
 }
 
 .choose__button {
@@ -999,13 +1018,28 @@ main * {
     width: 500px;
 }
 
-.point__container {
-    display: block;
-}
-
 .point__radio__container,
 .address__radio__container {
-    margin-bottom: 33px;
+    margin-bottom: 30px;
+}
+
+.point__radio__text,
+.address__radio__text {
+    max-width: 400px;
+}
+
+.address__radio__container {
+    display: none;
+    gap: 8px;
+}
+
+.point__radio__text {
+    padding-top: 8px;
+}
+
+.point__rating__subtext {
+    color: var(--light-gray-text-color);
+    line-height: 16px;
 }
 
 .point__change-way {
@@ -1019,7 +1053,7 @@ main * {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 34px;
+    height: 36px;
     gap: 16px;
     flex: 1 0 0;
     align-self: stretch;
@@ -1029,6 +1063,10 @@ main * {
     font-size: var(--text-caption-size);
     font-weight: var(--bold-weight);
     line-height: 16px;
+}
+
+.choosed {
+    border: 2px solid var(--accent-color);
 }
 
 .address_header {
@@ -1042,18 +1080,53 @@ main * {
     margin-left: 0;
 }
 
-.point__radio__text {
-    padding: 4px 0px 4px 0px;
-    gap: 4px;
+.address__radio__text {
+    padding: 8px 0px 4px 0px;
     flex: 1 0 0;
 }
 
 .window__delete__button {
-    margin-top: 4px;
+    margin-top: 10px;
     filter: invert(63%) sepia(11%) saturate(430%) hue-rotate(201deg) brightness(94%) contrast(97%);
 }
 
-.window__delete__button:hover {
-    margin-top: 4px;
-    filter: invert(43%) sepia(56%) saturate(4957%) hue-rotate(350deg) brightness(101%) contrast(92%);
+
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
 }
+
+/*---dots---*/
+.dot__container {
+    position: absolute;
+    z-index: 3;
+    top: -5px;
+    right: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 16px;
+    background-color: var(--sign-color);
+    padding: 0 4px 2px;
+}
+
+.dot__container__product {
+    top: -5px;
+    right: -5px;
+}
+
+.dot__container__larger {
+    padding: 0 6px 2px;
+}
+
+.dot {
+    font-size: 10px;
+    line-height: 1.8em;
+    font-weight: var(--bold-weight);
+    color: white;
+}
+
+.
