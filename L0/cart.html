@@ -52,7 +52,9 @@
                         <div class="in-stock__first-line">
                             <div class="in-stock__checkbox-all">
                                 <input type="checkbox" id="all" name="all" value="all" checked>
-                                <label for="all" class="all__text">Выбрать все</label>
+                                <label for="all" class="all__text">
+                                    <p class="checkbox__text">Выбрать все</p>
+                                </label>
                             </div>
 
                             <button class="in-stock__button actual__products__button"></button>
@@ -192,30 +194,34 @@
                                         <p class="delivery-way__info__item__text delivery-way__subitem">Бесплатно</p>
                                     </div>
 
-                                    <div class="delivery-way__info__item">
+                                    <div class="delivery-way__info__item delivery-way__info__item__check">
                                         <p class="delivery-way__info__item__header">5—6 февраля</p>
                                         <div class="delivery-way__info__item__images delivery-way__subitem">
-                                            <div class="delivery-way__info__item__image__container">
+                                            <div class="delivery-way__info__item__image__container"
+                                                id="imageContainer1">
                                                 <img src="icons/photo.svg" class="delivery-way__info__item__image"
                                                     id="product-image1" alt="product photo">
                                             </div>
 
-                                            <div class="delivery-way__info__item__image__container">
+                                            <div class="delivery-way__info__item__image__container"
+                                                id="imageContainer2">
                                                 <img src="icons/photo2.svg" class="delivery-way__info__item__image"
                                                     id="product-image2" alt="product photo">
                                             </div>
 
-                                            <div class="delivery-way__info__item__image__container">
+                                            <div class="delivery-way__info__item__image__container"
+                                                id="imageContainer3">
                                                 <img src="icons/photo3.svg" class="delivery-way__info__item__image"
                                                     id="product-image3" alt="product photo">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="delivery-way__info__item delivery-way__info__item__dot">
+                                    <div
+                                        class="delivery-way__info__item delivery-way__info__item__check delivery-way__info__item__dot">
                                         <p class="delivery-way__info__item__header">7—8 февраля</p>
                                         <p class="delivery-way__info__item__images delivery-way__subitem">
-                                        <div class="delivery-way__info__item__image__container">
+                                        <div class="delivery-way__info__item__image__container" id="imageContainer2">
                                             <img src="icons/photo2.svg" class="delivery-way__info__item__image"
                                                 id="product-image4" alt="product photo">
                                         </div>
@@ -416,7 +422,9 @@
                     <div class="cart-total__add">
                         <div class="cart-total__checkbox">
                             <input type="checkbox" id="add__checkbox" name="add__checkbox" value="add__checkbox">
-                            <label for="add__checkbox" class="cart-total__text">Списать оплату сразу</label>
+                            <label for="add__checkbox">
+                                <p class="cart-total__text">Списать оплату сразу</p>
+                            </label>
                         </div>
 
                         <p class="cart-total__text cart-total__checkbox__text">Спишем оплату с карты при получении</p>

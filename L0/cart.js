@@ -14,7 +14,9 @@ let appState = {
             color: "белый",
             size: 56,
             storageName: "Коледино WB",
-            provider: "ООО Вайлдберриз",
+            provider: "Вайлдберриз",
+            ogrn: 5167746237148,
+            address: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
             counter: 1,
             sumNumber: 2,
             price: 522,
@@ -28,7 +30,9 @@ let appState = {
             productName: "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
             color: "прозрачный",
             storageName: "Коледино WB",
-            provider: "ООО Мегапрофстиль",
+            provider: "Мегапрофстиль",
+            ogrn: 5167746237148,
+            address: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
             counter: 200,
             price: 10500.235,
             oldPrice: 11500.235,
@@ -40,7 +44,9 @@ let appState = {
             imgURL: "icons/photo3.svg",
             productName: "Карандаши цветные Faber-Castell \"Замок\", набор 24 цвета, заточенные, шестигранные, Faber-Castell",
             storageName: "Коледино WB",
-            provider: "ООО Вайлдберриз",
+            provider: "Вайлдберриз",
+            ogrn: 5167746237148,
+            address: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
             counter: 2,
             sumNumber: 2,
             price: 247,
@@ -111,7 +117,13 @@ let appState = {
         }
     ]
 }
+
 function render() {
+    deliveryItemsCheck = document.querySelectorAll('.delivery-way__info__item__check');
+    deliveryItemsCheck.forEach((deliveryItemCheck) => {
+        deliveryItemCheck.style.display = 'flex';
+    });
+
     //price
     appState.products.forEach((item) => {
         priceActual = document.querySelector(`#actual__price${item.id}`);
@@ -189,7 +201,40 @@ function render() {
                 deliveryInfoItem.style.display = 'none';
                 dot.textContent = appState.products[i].counter;
             }
+
         }
+    }
+
+    //delivery-items
+    appState.products.forEach((item) => {
+        imageContainers = document.querySelectorAll(`#imageContainer${item.id}`);
+        if (item.checked) {
+            console.log('lol');
+            imageContainers.forEach((imageContainer) => {
+                imageContainer.style.display = 'flex';
+            });
+        }
+        else {
+            if (item.id === 2) {
+                deliveryInfoItem.style.display = 'none';
+            }
+            imageContainers.forEach((imageContainer) => {
+                imageContainer.style.display = 'none';
+            });
+        }
+    });
+
+    tmpProductRez = appState.products.reduce((checkedCount, product) => {
+        if (!product.checked) {
+            checkedCount--;
+        }
+        return checkedCount;
+    }, 3);
+
+    if (tmpProductRez === 0) {
+        deliveryItemsCheck.forEach((deliveryItemCheck) => {
+            deliveryItemCheck.style.display = 'none';
+        });
     }
 
     //card
@@ -302,9 +347,11 @@ function validateFirstName() {
     var nameCheck = (/^[a-zA-Zа-яА-Я]+$/).test(nameInputValue);
     if (nameCheck) {
         firstName.classList.remove('error__label');
+        return true;
     }
     else {
         firstName.classList.add('error__label');
+        return false;
     }
 }
 
@@ -313,9 +360,11 @@ function validateLastName() {
     var nameCheck = (/^[a-zA-Zа-яА-Я]+$/).test(nameInputValue);
     if (nameCheck) {
         lastName.classList.remove('error__label');
+        return true;
     }
     else {
         lastName.classList.add('error__label');
+        return false;
     }
 }
 
@@ -324,9 +373,11 @@ function validateEmail() {
     var emailCheck = (/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i).test(emailInputValue);
     if (emailCheck) {
         email.classList.remove('error__label');
+        return true;
     }
     else {
         email.classList.add('error__label');
+        return false;
     }
 }
 
@@ -335,9 +386,11 @@ function validatePhoneNumber() {
     var phoneNumberCheck = (/^\+?(\d{1,3})?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/).test(phoneNumberInputValue);
     if (phoneNumberCheck) {
         phoneNumber.classList.remove('error__label');
+        return true;
     }
     else {
         phoneNumber.classList.add('error__label');
+        return false;
     }
 }
 
@@ -346,9 +399,11 @@ function validateInn() {
     var innCheck = (/^[0-9]{14}$/).test(innInputValue);
     if (innCheck) {
         inn.classList.remove('error__label');
+        return true;
     }
     else {
         inn.classList.add('error__label');
+        return false;
     }
 }
 
@@ -366,6 +421,23 @@ function validateAll() {
     phoneNumber.addEventListener('blur', validatePhoneNumber);
     inn.addEventListener('blur', validateInn);
 
+    if (validateFirstName(), validateLastName(), validateEmail(), validatePhoneNumber(), validateInn()) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+function checkValidate() {
+    if (!validateAll()) {
+        const scrollTo = document.documentElement.scrollHeight - window.innerHeight;
+        window.scroll({
+            top: scrollTo,
+            behavior: 'smooth'
+        });
+    }
 }
 
 // create products in-stock and absent
@@ -389,6 +461,10 @@ function createProduct(item) {
     productInfoCheckbox.value = `product${item.id}`;
     productInfoCheckbox.checked = true;
     productInfoCheckbox.addEventListener('click', productCheckboxChange);
+
+    const productInfoCheckboxLabel = document.createElement('label');
+    productInfoCheckboxLabel.htmlFor = `product${item.id}`;
+
     const productInfoImage = document.createElement('img');
     productInfoImage.src = item.imgURL;
     productInfoImage.classList.add('product-info__img');
@@ -412,7 +488,7 @@ function createProduct(item) {
     provider.classList.add('provider');
     const providerName = document.createElement('p');
     providerName.classList.add('storage-info__name');
-    providerName.textContent = item.provider;
+    providerName.textContent = `ООО ${item.provider}`;
     const storageInfoIconContainer = document.createElement('div');
     storageInfoIconContainer.classList.add('storage-info__icon__container');
     const storageInfoIcon = document.createElement('img');
@@ -420,9 +496,57 @@ function createProduct(item) {
     storageInfoIcon.classList.add('storage-info__icon');
     storageInfoIcon.alt = "info";
 
+    const providerSubwindow = document.createElement('div');
+    providerSubwindow.classList.add('provider__subwindow');
+    const providerSubtextHeader = document.createElement('p');
+    providerSubtextHeader.classList.add('provider__subwindow__subtext');
+    providerSubtextHeader.classList.add('provider__subwindow__subtext__header');
+    providerSubtextHeader.textContent = `ООО «${item.provider}»`;
+    const providerSubtextOGRN = document.createElement('p');
+    providerSubtextOGRN.classList.add('provider__subwindow__subtext');
+    providerSubtextOGRN.textContent = `ОГРН: ${item.ogrn}`;
+    const providerSubtextAddress = document.createElement('p');
+    providerSubtextAddress.classList.add('provider__subwindow__subtext');
+    providerSubtextAddress.textContent = item.address;
+
     // product-order
     const productOrder = document.createElement('div');
     productOrder.classList.add('product-order');
+
+    const productOrderSubwindow = document.createElement('div');
+    productOrderSubwindow.classList.add('product-order__subwindow');
+
+    const productOrderSubwindowContainer = document.createElement('div');
+    productOrderSubwindowContainer.classList.add('product-order__subwindow__container');
+    const productOrderSubheaderContainer = document.createElement('div');
+    productOrderSubheaderContainer.classList.add('product-order__subheader__container');
+    const productOrderSubtextContainer = document.createElement('div');
+    productOrderSubtextContainer.classList.add('product-order__subtext__container');
+
+    const productOrderSubtextHeader1 = document.createElement('p');
+    productOrderSubtextHeader1.classList.add('product-order__subwindow__subtext');
+    productOrderSubtextHeader1.classList.add('product-order__subwindow__subtext__header');
+    productOrderSubtextHeader1.classList.add('product-order__subwindow__subtext__header1');
+    const productOrderSubtext1 = document.createElement('p');
+    productOrderSubtext1.classList.add('product-order__subwindow__subtext');
+
+    const productOrderSubtextHeader2 = document.createElement('p');
+    productOrderSubtextHeader2.classList.add('product-order__subwindow__subtext');
+    productOrderSubtextHeader2.classList.add('product-order__subwindow__subtext__header');
+    productOrderSubtextHeader2.classList.add('product-order__subwindow__subtext__header2');
+    const productOrderSubtext2 = document.createElement('p');
+    productOrderSubtext2.classList.add('product-order__subwindow__subtext');
+
+    var subwindowDiscount = item.oldPrice - item.price;
+    var subwindowDiscountUser = subwindowDiscount * 0.1;
+    var subwindowDiscountActual = subwindowDiscount - subwindowDiscountUser;
+    var subWindowPersent = (subwindowDiscountActual / item.oldPrice) * 100;
+
+    productOrderSubtextHeader1.textContent = `Скидка ${formatPrice(subWindowPersent)}%`;
+    productOrderSubtextHeader2.textContent = 'Скидка покупателя 10%';
+    productOrderSubtext1.textContent = `-${formatPrice(subwindowDiscountActual)} сом`;
+    productOrderSubtext2.textContent = `-${formatPrice(subwindowDiscountUser)} сом`;
+
     // product-sum
     const productSum = document.createElement('div');
     productSum.classList.add('product-sum');
@@ -499,6 +623,7 @@ function createProduct(item) {
     //dom
     //product-info
     productInfoIcon.appendChild(productInfoCheckbox);
+    productInfoIcon.appendChild(productInfoCheckboxLabel);
     productInfoIcon.appendChild(productInfoImage);
     productInfoIconContainer.appendChild(productInfoIcon);
 
@@ -526,8 +651,14 @@ function createProduct(item) {
     }
 
     storageInfoIconContainer.appendChild(storageInfoIcon);
+
+    providerSubwindow.appendChild(providerSubtextHeader);
+    providerSubwindow.appendChild(providerSubtextOGRN);
+    providerSubwindow.appendChild(providerSubtextAddress);
+
     provider.appendChild(providerName);
     provider.appendChild(storageInfoIconContainer);
+    provider.appendChild(providerSubwindow);
 
     storageInfo.appendChild(storageInfoName);
     storageInfo.appendChild(provider);
@@ -562,8 +693,19 @@ function createProduct(item) {
     priceActual.appendChild(actualTextPrice);
     priceActual.appendChild(actualText);
 
+    productOrderSubheaderContainer.appendChild(productOrderSubtextHeader1);
+    productOrderSubheaderContainer.appendChild(productOrderSubtextHeader2);
+    productOrderSubtextContainer.appendChild(productOrderSubtext1);
+    productOrderSubtextContainer.appendChild(productOrderSubtext2);
+
+    productOrderSubwindowContainer.appendChild(productOrderSubheaderContainer);
+    productOrderSubwindowContainer.appendChild(productOrderSubtextContainer);
+
+    productOrderSubwindow.appendChild(productOrderSubwindowContainer);
+
     priceOld.appendChild(OldTextPrice);
     priceOld.appendChild(OldText);
+    priceOld.appendChild(productOrderSubwindow);
 
     priceOldContainer.appendChild(hrPriceOld);
     priceOldContainer.appendChild(priceOld);
@@ -591,17 +733,11 @@ function createOldProduct(item) {
     //product-info__icon
     const productInfoIcon = document.createElement('div');
     productInfoIcon.classList.add('product-info__icon');
-    const productInfoCheckbox = document.createElement('input');
-    productInfoCheckbox.type = "checkbox";
-    productInfoCheckbox.id = `product${item.id}`;
-    productInfoCheckbox.name = "product";
-    productInfoCheckbox.value = `product${item.id}`;
 
     const productInfoImage = document.createElement('img');
     productInfoImage.src = item.imgURL;
     productInfoImage.classList.add('product-info__img');
     productInfoImage.classList.add('absent__img');
-    productInfoCheckbox.alt = "product photo";
     //product-item
     const productItem = document.createElement('div');
     productItem.classList.add('product-item');
@@ -671,7 +807,6 @@ function createOldProduct(item) {
 
 // count price
 function checkboxAllChange() {
-    const productCheckboxes = document.querySelectorAll('.product-checkbox');
     if (this.checked) {
         appState.products.forEach((item) => {
             item.checked = true;
@@ -828,7 +963,7 @@ function createCardWindow(item) {
     radio.addEventListener('click', radioCardCheck);
 
     labelRadio = document.createElement('label');
-    labelRadio.for = `card${item.id}`;
+    labelRadio.htmlFor = `card${item.id}`;
     labelRadio.classList.add('window__radio__label');
 
     cardInfoContainer = document.createElement('div');
@@ -872,7 +1007,7 @@ function createPointWindow(item) {
     radio.addEventListener('click', radioPointCheck);
 
     labelRadio = document.createElement('label');
-    labelRadio.for = `point${item.id}`;
+    labelRadio.htmlFor = `point${item.id}`;
     labelRadio.classList.add('window__radio__label');
 
     windowPointLabel = document.createElement('div');
@@ -938,7 +1073,7 @@ function createAddressWindow(item) {
     radio.addEventListener('click', radioAddressCheck);
 
     labelRadio = document.createElement('label');
-    labelRadio.for = `address${item.id}`;
+    labelRadio.htmlFor = `address${item.id}`;
     labelRadio.classList.add('window__radio__label');
 
     addressRadioText = document.createElement('p');
@@ -1029,7 +1164,6 @@ pointChangeButtons.forEach((button) => {
 
 // resize page
 function handleResize() {
-    const viewportWidth = window.innerWidth;
     const main = document.querySelector('main');
     const mainContainer = document.querySelector('.main__container');
 
@@ -1048,10 +1182,13 @@ function handleResize() {
         headerContainer.style.removeProperty('width');
     }
 }
+handleResize();
 window.addEventListener('resize', handleResize);
 
 createProducts();
 createOldProducts();
+
+const productCheckboxes = document.querySelectorAll('.product-checkbox');
 
 const checkboxAll = document.querySelector('#all');
 checkboxAll.addEventListener('change', checkboxAllChange);
@@ -1060,7 +1197,7 @@ const addCheckbox = document.querySelector('#add__checkbox');
 addCheckbox.addEventListener('change', checkboxAddChange);
 
 const checkButton = document.querySelector('.cart-total__button');
-checkButton.addEventListener('change', validateAll);
+checkButton.addEventListener('click', checkValidate);
 
 const actualButton = document.querySelector('.actual__products__button');
 const absentButton = document.querySelector('.absent__products__button');
