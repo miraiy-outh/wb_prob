@@ -1210,8 +1210,6 @@ main * {
     gap: 8px;
 }
 
-.point__radio__text {}
-
 .point__rating__subtext {
     color: var(--light-gray-text-color);
     line-height: 16px;
@@ -1298,5 +1296,3 @@ main * {
     font-weight: var(--bold-weight);
     color: white;
 }
-
-.
