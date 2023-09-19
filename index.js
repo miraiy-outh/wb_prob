@@ -432,11 +432,8 @@ function validateAll() {
 
 function checkValidate() {
     if (!validateAll()) {
-        const scrollTo = document.documentElement.scrollHeight - window.innerHeight;
-        window.scroll({
-            top: scrollTo,
-            behavior: 'smooth'
-        });
+        const fieldsContainer = document.querySelector('.order-info__receiver-info');
+        fieldsContainer.scrollIntoView({ behavior: "smooth" });
     }
 }
 
@@ -445,6 +442,12 @@ function createProduct(item) {
     const products = document.querySelector('.in-stock__products');
     const product = document.createElement('div');
     product.classList.add('product');
+
+    const hr = document.createElement('hr');
+    hr.classList.add('hr-mob');
+
+    const productContainer = document.createElement('div');
+    productContainer.classList.add('product__container');
     // product-info
     const productInfo = document.createElement('div');
     productInfo.classList.add('product-info');
@@ -550,6 +553,9 @@ function createProduct(item) {
     // product-sum
     const productSum = document.createElement('div');
     productSum.classList.add('product-sum');
+    const productSumContainer = document.createElement('div');
+    productSumContainer.classList.add('product-sum__container');
+
     const productSumCounter = document.createElement('div');
     productSumCounter.classList.add('product-sum__counter');
     const counterMinus = document.createElement('button');
@@ -610,6 +616,7 @@ function createProduct(item) {
     priceOldContainer.classList.add('price__old__container');
     const hrPriceOld = document.createElement('hr');
     hrPriceOld.classList.add('old__line');
+    hrPriceOld.classList.add('hr-desktop');
     const priceOld = document.createElement('div');
     priceOld.classList.add('price__old');
     const OldTextPrice = document.createElement('p');
@@ -643,8 +650,17 @@ function createProduct(item) {
     if (item.hasOwnProperty('size')) {
         const characteristicSize = document.createElement('div');
         characteristicSize.classList.add('characteristic');
+        characteristicSize.classList.add('characteristic__size');
         characteristicSize.textContent = `Размер: ${item.size}`;
         characteristics.appendChild(characteristicSize);
+
+        const sizeMobContainer = document.createElement('div');
+        sizeMobContainer.classList.add('size-mob__container');
+        const sizeMob = document.createElement('p');
+        sizeMob.classList.add('size-mob');
+        sizeMob.textContent = item.size;
+        sizeMobContainer.appendChild(sizeMob);
+        characteristics.appendChild(sizeMobContainer);
     }
     else {
         tmp += 1;
@@ -681,13 +697,14 @@ function createProduct(item) {
     productSumIcons.appendChild(favouriteButton);
     productSumIcons.appendChild(deleteButton);
 
-    productSum.appendChild(productSumCounter);
+    productSumContainer.appendChild(productSumCounter);
     if (item.hasOwnProperty('sumNumber')) {
         const productSumText = document.createElement('p');
         productSumText.classList.add('product-sum__text');
         productSumText.textContent = `Осталось ${item.sumNumber} шт.`;
-        productSum.appendChild(productSumText);
+        productSumContainer.appendChild(productSumText);
     }
+    productSum.appendChild(productSumContainer);
     productSum.appendChild(productSumIcons);
     //product-price
     priceActual.appendChild(actualTextPrice);
@@ -716,8 +733,11 @@ function createProduct(item) {
     productOrder.appendChild(productSum);
     productOrder.appendChild(productPrice);
 
-    product.appendChild(productInfo);
-    product.appendChild(productOrder);
+    productContainer.appendChild(productInfo);
+    productContainer.appendChild(productOrder);
+
+    product.appendChild(hr);
+    product.appendChild(productContainer);
 
     products.appendChild(product);
 }
@@ -727,9 +747,16 @@ function createOldProduct(item) {
     const product = document.createElement('div');
     product.classList.add('product');
     product.classList.add('absent__product');
+
+    const hr = document.createElement('hr');
+    hr.classList.add('hr-mob');
+
+    const productContainer = document.createElement('div');
+    productContainer.classList.add('product__container');
     // product-info
     const productInfo = document.createElement('div');
     productInfo.classList.add('product-info');
+    productInfo.classList.add('product-info__absent');
     //product-info__icon
     const productInfoIcon = document.createElement('div');
     productInfoIcon.classList.add('product-info__icon');
@@ -754,6 +781,7 @@ function createOldProduct(item) {
     // product-sum
     const productSumIcons = document.createElement('div');
     productSumIcons.classList.add('product-sum__icons');
+    productSumIcons.classList.add('product-sum__icons__absent');
     const favouriteButton = document.createElement('button');
     favouriteButton.classList.add('product__button');
     favouriteButton.classList.add('favourite__button');
@@ -779,9 +807,18 @@ function createOldProduct(item) {
     if (item.hasOwnProperty('size')) {
         const characteristicSize = document.createElement('div');
         characteristicSize.classList.add('characteristic');
+        characteristicSize.classList.add('characteristic__size');
         characteristicSize.classList.add('absent__text');
         characteristicSize.textContent = `Размер: ${item.size}`;
         characteristics.appendChild(characteristicSize);
+
+        const sizeMobContainer = document.createElement('div');
+        sizeMobContainer.classList.add('size-mob__container');
+        const sizeMob = document.createElement('p');
+        sizeMob.classList.add('size-mob');
+        sizeMob.textContent = item.size;
+        sizeMobContainer.appendChild(sizeMob);
+        characteristics.appendChild(sizeMobContainer);
     }
     else {
         tmp += 1;
@@ -799,8 +836,11 @@ function createOldProduct(item) {
 
     productOrder.appendChild(productSumIcons);
 
-    product.appendChild(productInfo);
-    product.appendChild(productOrder);
+    productContainer.appendChild(productInfo);
+    productContainer.appendChild(productOrder);
+
+    product.appendChild(hr);
+    product.appendChild(productContainer);
 
     products.appendChild(product);
 }
@@ -1125,6 +1165,7 @@ function changedWayPoint() {
 
 //close subwindow
 function closeWindow() {
+    document.body.style.removeProperty('overflow');
     windowsContainer = document.querySelectorAll('.windows__container');
     windowsContainer.forEach((windowContainer) => {
         windowContainer.style.display = 'none';
@@ -1145,11 +1186,15 @@ chooseButtons.forEach((chooseButton) => {
 function openSubWindowCard() {
     cardContainer = document.querySelector('.card__container');
     cardContainer.style.display = 'block';
+    document.body.style.overflow = "hidden";
+
 }
 
 function openSubWindowPoint() {
     cardContainer = document.querySelector('.point__container');
     cardContainer.style.display = 'block';
+    document.body.style.overflow = "hidden";
+
 }
 
 cardChangeButtons = document.querySelectorAll('.change__card__button');
